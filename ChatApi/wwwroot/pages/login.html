@@ -1,0 +1,29 @@
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <!-- Tabs Titles -->
+
+        <!-- Icon -->
+        <div class="fadeIn first">
+            <h2 class="text-info">
+                Login
+            </h2>
+        </div>
+
+        <!-- Login Form -->
+        <form id="login-form">
+            <input type="text" id="name" class="fadeIn second" name="name" placeholder="name">
+            <input type="password" id="password" class="fadeIn third" name="login" placeholder="password">
+            <div class="form-group mt-2 fadeIn fourth">
+                <label for="remember-me" class="text-secondary">Remember me</label>
+                <input type="checkbox" id="remember-me">
+            </div>
+            <input type="button" class="fadeIn fifth" value="Log In" onclick="return login1(event);">
+        </form>
+
+        <!-- Register Link -->
+        <div id="formFooter">
+            <a class="underlineHover" href="#" onclick="loadRegisterPage();">Register</a>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,255 @@
+<div class="container-fluid p-0 m-0 d-flex">
+    <div class="left-side m-0 border-right">
+        <div class="profile border-bottom d-flex ">
+            <img src="/img/cover.jpg" alt="" class="img-thumbnail m-1 ml-3 p-0" width=50>
+            <a href="" onclick="loadSettingsPage();">
+                <h5 id="my-account-name" class="text-right text-info m-3 float-right"></h5>
+            </a>
+        </div>
+        <div class="chat-list scrollable">
+            <!-- friends -->
+            <h5 class="text-secondary text-center m-2 mt-4"><u>Friends</u></h5>
+            <div class="list-group friends">
+                <div class="spinner-border text-center mt-2 text-info"></div>
+                <div class="trash">
+                    <a href="#"
+                        class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <div class="ml-0 pl-0">
+                            <img src="https://yt3.ggpht.com/yti/ANoDKi4YzWE-DZHxxtpcxllmdJUyzmHS_9RS3IVDxDbJtw=s108-c-k-c0x00ffffff-no-rj"
+                                alt="" class="img-thumbnail m-0 p-0" width=30>
+                            <p class="text-secondary" style="display: inline;">Cras justo odio</p>
+                        </div>
+                        <span class="badge badge-info badge-pill">4</span>
+                    </a>
+                    <a href="#"
+                        class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <div class="ml-0 pl-0">
+                            <img src="https://yt3.ggpht.com/yti/ANoDKi4YzWE-DZHxxtpcxllmdJUyzmHS_9RS3IVDxDbJtw=s108-c-k-c0x00ffffff-no-rj"
+                                alt="" class="img-thumbnail m-0 p-0" width=30>
+                            <p class="text-success" style="display: inline;">Cras justo odio</p>
+                        </div>
+                        <span class="badge badge-info badge-pill">14</span>
+                    </a>
+                    <a href="#"
+                        class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <div class="ml-0 pl-0">
+                            <img src="https://yt3.ggpht.com/yti/ANoDKi4YzWE-DZHxxtpcxllmdJUyzmHS_9RS3IVDxDbJtw=s108-c-k-c0x00ffffff-no-rj"
+                                alt="" class="img-thumbnail m-0 p-0" width=30>
+                            <p class="text-secondary" style="display: inline;">Cras justo odio</p>
+                        </div>
+                        <span class="badge badge-info badge-pill"></span>
+                    </a>
+
+                </div>
+            </div>
+            <!-- groups -->
+            <h5 class="text-secondary text-center m-2 mt-4"><u>Groups</u></h5>
+            <div class="list-group groups">
+                <div class="spinner-border text-center mt-2 text-info"></div>
+                <div class="trash">
+                    <a href="#"
+                        class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <div class="ml-0 pl-0">
+                            <img src="https://yt3.ggpht.com/yti/ANoDKi4YzWE-DZHxxtpcxllmdJUyzmHS_9RS3IVDxDbJtw=s108-c-k-c0x00ffffff-no-rj"
+                                alt="" class="img-thumbnail m-0 p-0" width=30>
+                            <p class="text-secondary" style="display: inline;">Cras justo odio</p>
+                        </div>
+                        <span class="badge badge-info badge-pill"></span>
+                    </a>
+                    <a href="#"
+                        class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <div class="ml-0 pl-0">
+                            <img src="https://yt3.ggpht.com/yti/ANoDKi4YzWE-DZHxxtpcxllmdJUyzmHS_9RS3IVDxDbJtw=s108-c-k-c0x00ffffff-no-rj"
+                                alt="" class="img-thumbnail m-0 p-0" width=30>
+                            <p class="text-secondary" style="display: inline;">Cras justo odio</p>
+                        </div>
+                        <span class="badge badge-info badge-pill">1</span>
+                    </a>
+                    <a href="#"
+                        class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <div class="ml-0 pl-0">
+                            <img src="https://yt3.ggpht.com/yti/ANoDKi4YzWE-DZHxxtpcxllmdJUyzmHS_9RS3IVDxDbJtw=s108-c-k-c0x00ffffff-no-rj"
+                                alt="" class="img-thumbnail m-0 p-0" width=30>
+                            <p class="text-secondary" style="display: inline;">Cras justo odio</p>
+                        </div>
+                        <span class="badge badge-info badge-pill">13</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="active-chat p-0 m-0">
+        <!-- options -->
+        <div class="message-options border-bottom shadow-sm d-flex">
+            <h5 class="chat-name text-info p-2 pt-3">
+                <div class="spinner-border text-center mt-2 text-info"></div>
+            </h5>
+            <div class="ml-auto btn-group dropleft">
+                <button type="button" class="chat-settings-btn btn bg-white"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <b>&#8942;&nbsp;</b>
+                </button>
+                <div id="chat-setting-dropdown" class="dropdown-menu">
+
+                </div>
+            </div>
+        </div>
+
+        <!-- msg list -->
+        <div class="message-list scrollable">
+            <div class="trash">
+                <!-- load more btn -->
+                <div class="row m-0 p-0">
+                    <button class="mx-auto btn btn-small btn-outline-info mt-1">Load more</button>
+                </div>
+
+                <!-- msg -->
+                <div class="message-box px-5 py-2 row m-0">
+                    <div class="mr-3 message-profile-pic">
+                        <img src="/img/cover.jpg" alt="" class="img-fluid m-0 p-0">
+                    </div>
+                    <div class="message bg-light border">
+                        <div class="row px-4">
+                            <div class="mt-2  text-info"><b>Nume</b></div>
+                            <div class="ml-auto mt-2  text-right text-secondary">03.03.2003 17:51:49</div>
+                        </div>
+                        <div class="row px-4 text-dark">
+                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Porro, enim laudantium ex
+                                deleniti
+                                cum eum eos neque totam. Porro ut, molestiae aliquam nemo praesentium reiciendis dicta
+                                laudantium rem facilis omnis.</p>
+                            <small class="ml-auto text-right text-secondary">Seen by: howoahfoiwhao, hofuhohwfoah,
+                                hhfwoihaiof </small>
+                        </div>
+                    </div>
+                </div>
+                <!-- my msg -->
+                <div class="ml-auto message-box px-5 py-2 row m-0">
+                    <div class="message bg-light border">
+                        <div class="row px-4">
+                            <div class="mt-2 text-secondary">03.03.2003 17:51:49</div>
+                            <div class="ml-auto mt-2  text-right  text-success"><b>Nume</b></div>
+                        </div>
+                        <div class="row px-4 text-dark">
+                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Porro, enim laudantium ex
+                                deleniti
+                                cum eum eos neque totam. Porro ut, molestiae aliquam nemo praesentium reiciendis dicta
+                                laudantium rem facilis omnis.</p>
+                            <small class="ml-auto text-right text-secondary">Seen by: howoahfoiwhao, hofuhohwfoah,
+                                hhfwoihaiof </small>
+                        </div>
+                    </div>
+                    <div class="ml-3 message-profile-pic">
+                        <img src="/img/cover.jpg" alt="" class="img-fluid m-0 p-0">
+                    </div>
+                </div>
+                <!-- seen bar -->
+                <div class="ml-auto mt-1 seen-bar border-info border-top text-secondary text-right mr-5 px-3">
+                    <img src="/img/cover.jpg" alt="" class="img-fluid m-0 p-0" width="30" title="user">
+                    <img src="/img/cover.jpg" alt="" class="img-fluid m-0 p-0" width="30" title="user">
+                    <img src="/img/cover.jpg" alt="" class="img-fluid m-0 p-0" width="30" title="user">
+
+                </div>
+            </div>
+        </div>
+
+        <!-- msg bar -->
+        <div class="message-bar bg-light mb-1 px-4 d-flex">
+            <div class="add-photo-btn">
+                <label for="photo" class=" btn bg-light"> <i class="material-icons">add_a_photo</i></label>
+                <input type="file" accept="image/*" name="photo" id="photo">
+            </div>
+            <div class="add-photo-btn">
+                <label for="file" class=" btn bg-light"> <i class="material-icons">attachment</i></label>
+                <input type="file" name="photo" id="file">
+            </div>
+            <div class="chat-area p-2">
+                <textarea id="chat-text" rows='1'></textarea>
+            </div>
+            <button class="send-message-btn ml-2 my-2 btn btn-outline-success" onclick="sendMessage();">Send</button>
+        </div>
+    </div>
+
+</div>
+<!-- MODALS -->
+<!-- add friend -->
+<div class="modal fade" id="add-friend-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-info">Add friend</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- alerts: -->
+                <div id="friend-added" class="d-none mb-0 alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Friend added succesfully</strong> You can say hi to him :).
+                    <button type="button" class="close" onclick="$('#friend-added').addClass('d-none')"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div id="friend-not-found" class="d-none mb-0 alert alert-danger alert-dismissible fade show"
+                    role="alert">
+                    <strong>Friend couldn't be added</strong> User was not found or was already added to your friends
+                    list.
+                    <button type="button" class="close" onclick="$('#friend-not-found').addClass('d-none')"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div id="friend-couldnt-be-added" class="d-none mb-0 alert alert-danger alert-dismissible fade show"
+                    role="alert">
+                    <strong>Friend couldn't be added</strong> Try again later.
+                    <button type="button" class="close" onclick="$('#friend-couldnt-be-added').addClass('d-none')"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!-- form -->
+                <div class="form-group">
+                    <label for="friend-name" class="col-form-label text-secondary">&nbsp;Friend's name:</label>
+                    <input type="text" class="form-control" style="height: 50px;" id="friend-name">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-info" onclick="return addFriend(event);">Add Friend</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- create chat -->
+<div class="modal fade" id="create-group-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-info">Create Group Chat</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- form -->
+                <div class="form-group">
+                    <label for="chat-name" class="col-form-label text-secondary">&nbsp;Chat's name:</label>
+                    <input type="text" class="form-control" style="height: 50px;" id="chat-name">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-info" onclick="return createChat();">Create Chat</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    startConnection();
+    loadApp();
+</script>

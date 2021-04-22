@@ -1,0 +1,28 @@
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <!-- Tabs Titles -->
+
+        <!-- Icon -->
+        <div class="fadeIn first">
+            <h2 class="text-info">
+                SignUp
+            </h2>
+        </div>
+
+        <!-- Register Form -->
+        <form id="registration-form">
+            <input type="text" id="name" class="fadeIn second" name="name" placeholder="name">
+            <input type="email" id="email" class="fadeIn third" name="email" placeholder="email">
+            <input type="password" id="password" class="fadeIn fourth" name="passowrd" placeholder="password">
+            <input type="password" id="password-confirmation" class="fadeIn fifth" name="password-confirmation" placeholder="confirm password">
+            
+            <input type="button" class="fadeIn sixth" value="Register" onclick="return register(event);">
+        </form>
+
+        <!-- Login Link -->
+        <div id="formFooter">
+            <a class="underlineHover" href="#" onclick="loadLoginPage();">If you already have an account click here</a>
+        </div>
+
+    </div>
+</div>
