@@ -182,7 +182,7 @@ namespace ChatApi.Services
             }
         }
 
-        public async Task AddUserToChatAsync(int chatId, int userId)
+        public async Task AddUserToChatAsync(int chatId, string userId)
         {
             var chat = _unitOfWork.Chats.GetByID(chatId);
             var userToAdd = _unitOfWork.Users.GetByID(userId);
@@ -213,7 +213,7 @@ namespace ChatApi.Services
             }
         }
 
-        public async Task RemoveUserFromChatAsync(int chatId, int userId)
+        public async Task RemoveUserFromChatAsync(int chatId, string userId)
         {
             var chat = _unitOfWork.Chats.GetByID(chatId);
             var userToRemove = _unitOfWork.Users.GetByID(userId);

@@ -54,6 +54,20 @@
           <span aria-hidden="true">&times;</span>
         </button>
     </div>
+    <!-- chat created -->
+    <div id="chat-created-successfully"  class="d-none mb-0  alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Chat Created!</strong> You can add friends to it now.
+        <button type="button" class="close" onclick="$('#chat-created-successfully').addClass('d-none')" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <!-- chat not created -->
+    <div id="chat-creation-failed"  class="d-none mb-0 alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Chat couldn't be created</strong> Change the name or try again later.
+        <button type="button" class="close" onclick="$('#chat-creation-failed').addClass('d-none')" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
 
     <main>
     </main>

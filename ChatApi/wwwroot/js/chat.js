@@ -16,8 +16,8 @@ async function getChats() {
     console.log("get user");
     console.log(response);
     if (response.status == 200) {
-        response.data.usersChats.forEach(chat => {
-            addChatToArray(chat);
+        response.data.usersChats.forEach(userChat => {
+            addChatToArray(userChat);
         });
     }
 }
@@ -55,12 +55,12 @@ function getChatFromArrayById(chatId) {
     });
     return chat;
 }
-function addChatToArray(chat) {
-    if (chat.isGroupChat) {
-        groupUserChats.push(chat);
+function addChatToArray(userChat) {
+    if (userChat.chat.isGroupChat) {
+        groupUserChats.push(userChat);
         groupUserChats.sort((a, b) => (a.name > b.name) ? 1 : -1);
     } else {
-        friendUserChats.push(chat);
+        friendUserChats.push(userChat);
         friendUserChats.sort((a, b) => (a.name > b.name) ? 1 : -1);
     }
 }
@@ -199,7 +199,7 @@ function updateChatsUI() {
         var chatActive = "";
 
         /// get image first
-        var image = "https://yt3.ggpht.com/yti/ANoDKi4YzWE-DZHxxtpcxllmdJUyzmHS_9RS3IVDxDbJtw=s108-c-k-c0x00ffffff-no-rj"
+        var image = "img/cover.jpg"
 
         var nameColour = 'text-secondary';
         if (userChat.isActive) {
@@ -354,7 +354,9 @@ function loadChat(chatId, name = "") {
     var dropdownSettings = $('#chat-setting-dropdown');
     var chat = getChatFromArrayById(chatId);
 
+    // drop down menu with settings
     var dropdownHtml = ``;
+
     if (chat.isGroupChat) {
         var active = 'd-none';
         if (chat.owner.id == getCookie('userId')) {
@@ -363,10 +365,12 @@ function loadChat(chatId, name = "") {
         dropdownHtml = `
         <a class="dropdown-item text-center" href="#" onclick="viewChatsParticipants(` + chatId + `)">View Participants</a>
         <a class="dropdown-item text-center ` + active + `" href="#" onclick="changeChatName(` + chatId + `)">Change Name</a>
+        <a class="dropdown-item  text-center" href="#" onclick="addPersonToChat(` + chatId + `)">Add person</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item text-danger text-center" href="#" onclick="leaveChat(` + chatId + `)">Leave group</a>
         <a class="dropdown-item text-danger text-center ` + active + `" href="#" onclick="destroyChat(` + chatId + `)">Delete Chat</a>
         `;
+// ^^^
 
     } else {
         var friendsId;
@@ -387,7 +391,7 @@ function loadChat(chatId, name = "") {
     var messageList = $(".message-list");
     var chatName = $('.chat-name');
 
-    if (name != "") {
+    if (name != '') {
         chatName.html("&nbsp; " + name);
      }
     var dict = [];

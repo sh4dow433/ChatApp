@@ -14,8 +14,8 @@ namespace ChatApi.ServicesInterfaces
         Task ChatSeenAsync(int chatId, string userId);
         Task UpdateChatNameAsync(int chatId, string name);
 
-        Task AddUserToChatAsync(int chatId, int userId);
-        Task RemoveUserFromChatAsync(int chatId, int userId);
+        Task AddUserToChatAsync(int chatId, string userId);
+        Task RemoveUserFromChatAsync(int chatId, string userId);
 
 
     }

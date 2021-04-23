@@ -14,7 +14,9 @@ using Microsoft.AspNetCore.Authorization;
 namespace ChatApi.Controllers
 {
     [Authorize]
-    public class ChatController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ChatsController : Controller
     {
         private readonly IChatsManager _chatsManager;
         private readonly SignInManager<AppUser> _signInManager;
@@ -22,7 +24,7 @@ namespace ChatApi.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public ChatController(
+        public ChatsController(
             IChatsManager chatsManager,
             SignInManager<AppUser> signInManager,
             UserManager<AppUser> userManager,
@@ -78,6 +80,49 @@ namespace ChatApi.Controllers
             }
             await _chatsManager.DeleteMessageAsync(id);
             return NoContent();
+        }
+
+        [HttpPost]
+        [Route("addToChat")]
+        public async Task<IActionResult> AddToChat([FromBody] AddOrRemoveUserToChatDto addUserToChatDto)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var chat = _unitOfWork.Chats.GetByID(addUserToChatDto.ChatId);
+            if (chat == null)
+            {
+                return NotFound();
+            }
+
+            if (chat.Owner != user)
+            {
+                return Unauthorized();
+            }
+            await _chatsManager.AddUserToChatAsync(addUserToChatDto.ChatId, addUserToChatDto.UserId);
+            return NoContent();
+        }
+
+        [HttpPost]
+        [Route("removeFromChat")]
+        public async Task<IActionResult> RemoveFromChat([FromBody] AddOrRemoveUserToChatDto removeUserFromChatDto)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var userToRemove = _unitOfWork.Users.GetByID(removeUserFromChatDto.UserId);
+            if (userToRemove == null)
+            {
+                return NotFound();
+            }
+            if (user == userToRemove)
+            {
+                await _chatsManager.RemoveUserFromChatAsync(removeUserFromChatDto.ChatId, removeUserFromChatDto.UserId);
+                return NoContent();
+            }
+            var chat = _unitOfWork.Chats.GetByID(removeUserFromChatDto.ChatId);
+            if (chat.Owner == user)
+            {
+                await _chatsManager.RemoveUserFromChatAsync(removeUserFromChatDto.ChatId, removeUserFromChatDto.UserId);
+                return NoContent();
+            }
+            return Unauthorized();
         }
     }
 }

@@ -38,15 +38,36 @@ function seenChat(chatId) {
     hubConnection.invoke("ChatSeen", JSON.stringify(seenChatDto));
 }
 
-function addPersonToChat() {
+
+function addUserToChat() {
 
 }
 
-function removePersonFromChat() {
+function removeUserFromChat() {
 
 }
 
-function createChat() {
+
+
+
+async function createChat() {
+    var userId = getCookie('userId');
+    var chatName = $('#chat-name').val();
+    var data = {
+        'name': chatName,
+        'ownerId': userId
+    }
+    var headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getCookie("accessToken")
+    }
+    var result = await fetchData('api/chats/create', 'POST', headers, data);
+    if (result.status == 201) {
+        console.log('chat created successfully');
+        $('#chat-created-successfully').removeClass('d-none');
+    } else {
+        $('#chat-creation-failed').removeClass('d-none');
+    }
 
 }
 
