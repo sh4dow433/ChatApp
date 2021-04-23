@@ -1,4 +1,4 @@
-function sendMessage(chatId) {
+async function sendMessage(chatId) {
     var senderId = getCookie("userId");
     var text = $('#chat-text').val();
     var hasFile = false;
@@ -47,9 +47,6 @@ function removeUserFromChat() {
 
 }
 
-
-
-
 async function createChat() {
     var userId = getCookie('userId');
     var chatName = $('#chat-name').val();
@@ -71,7 +68,7 @@ async function createChat() {
 
 }
 
-function deleteChat1(chatId) {
+function deleteChat(chatId) {
     var headers = {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + getCookie("accessToken")
@@ -79,8 +76,8 @@ function deleteChat1(chatId) {
     var result = await fetchData('api/chats/delete/' + chatId, 'DELETE', headers);
     if (result.status == 204) {
         console.log('chat deleted successfully');
-        $('#chat-deleted-successfully').removeClass('d-none');
+        // $('#chat-deleted-successfully').removeClass('d-none');
     } else {
-        $('#chat-deletion-failed').removeClass('d-none');
+        // $('#chat-deletion-failed').removeClass('d-none');
     }
 }
