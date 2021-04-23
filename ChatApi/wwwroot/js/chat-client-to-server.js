@@ -71,7 +71,7 @@ async function createChat() {
 
 }
 
-function deleteChat(chatId) {
+function deleteChat1(chatId) {
     var headers = {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + getCookie("accessToken")

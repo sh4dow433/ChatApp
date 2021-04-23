@@ -368,7 +368,7 @@ function loadChat(chatId, name = "") {
         <div class="dropdown-divider"></div>
         <a class="dropdown-item text-center ` + active + `" href="#" onclick="changeChatName(` + chatId + `)">Change name</a>
         <a class="dropdown-item text-danger text-center" href="#" onclick="leaveChat(` + chatId + `)">Leave group</a>
-        <a class="dropdown-item text-danger text-center ` + active + `" href="#" onclick="return deleteChat(` + chatId + `);">Delete chat</a>
+        <a class="dropdown-item text-danger text-center ` + active + `" href="#" onclick="return deleteChat1(` + chatId + `);">Delete chat</a>
         `;
 // ^^^
 
