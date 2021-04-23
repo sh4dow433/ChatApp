@@ -363,12 +363,12 @@ function loadChat(chatId, name = "") {
             active = '';
         }
         dropdownHtml = `
-        <a class="dropdown-item text-center" href="#" onclick="viewChatsParticipants(` + chatId + `)">View Participants</a>
-        <a class="dropdown-item text-center ` + active + `" href="#" onclick="changeChatName(` + chatId + `)">Change Name</a>
-        <a class="dropdown-item  text-center" href="#" onclick="addPersonToChat(` + chatId + `)">Add person</a>
+        <a class="dropdown-item text-center" href="#" onclick="viewChatsParticipants(` + chatId + `)">View participants</a>
+        <a class="dropdown-item  text-center" href="#" data-toggle="modal" data-target="#add-user-to-chat-modal">Add person</a>
         <div class="dropdown-divider"></div>
+        <a class="dropdown-item text-center ` + active + `" href="#" onclick="changeChatName(` + chatId + `)">Change name</a>
         <a class="dropdown-item text-danger text-center" href="#" onclick="leaveChat(` + chatId + `)">Leave group</a>
-        <a class="dropdown-item text-danger text-center ` + active + `" href="#" onclick="destroyChat(` + chatId + `)">Delete Chat</a>
+        <a class="dropdown-item text-danger text-center ` + active + `" href="#" onclick="return deleteChat(` + chatId + `);">Delete chat</a>
         `;
 // ^^^
 

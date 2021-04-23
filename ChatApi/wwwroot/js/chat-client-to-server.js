@@ -71,6 +71,16 @@ async function createChat() {
 
 }
 
-function deleteChat() {
-
+function deleteChat(chatId) {
+    var headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getCookie("accessToken")
+    }
+    var result = await fetchData('api/chats/delete/' + chatId, 'DELETE', headers);
+    if (result.status == 204) {
+        console.log('chat deleted successfully');
+        $('#chat-deleted-successfully').removeClass('d-none');
+    } else {
+        $('#chat-deletion-failed').removeClass('d-none');
+    }
 }
