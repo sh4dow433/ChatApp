@@ -78,8 +78,8 @@ namespace ChatApi.Controllers
             {
                 return Unauthorized();
             }
-            await _chatsManager.DeleteMessageAsync(id);
-            return NoContent();
+            await _chatsManager.DeleteChatAsync(id);
+            return Ok(id);
         }
 
         [HttpPost]
@@ -98,7 +98,7 @@ namespace ChatApi.Controllers
                 return Unauthorized();
             }
             await _chatsManager.AddUserToChatAsync(addUserToChatDto.ChatId, addUserToChatDto.UserId);
-            return NoContent();
+            return Ok(addUserToChatDto);
         }
 
         [HttpPost]
@@ -114,13 +114,13 @@ namespace ChatApi.Controllers
             if (user == userToRemove)
             {
                 await _chatsManager.RemoveUserFromChatAsync(removeUserFromChatDto.ChatId, removeUserFromChatDto.UserId);
-                return NoContent();
+                return Ok(removeUserFromChatDto);
             }
             var chat = _unitOfWork.Chats.GetByID(removeUserFromChatDto.ChatId);
             if (chat.Owner == user)
             {
                 await _chatsManager.RemoveUserFromChatAsync(removeUserFromChatDto.ChatId, removeUserFromChatDto.UserId);
-                return NoContent();
+                return Ok(removeUserFromChatDto);
             }
             return Unauthorized();
         }
