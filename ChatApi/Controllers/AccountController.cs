@@ -25,7 +25,8 @@ namespace ChatApi.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public AccountController(SignInManager<AppUser> signInManager,
+        public AccountController(
+            SignInManager<AppUser> signInManager,
             UserManager<AppUser> userManager,
             JwtTokenConfig jwtTokenConfig,
             IUnitOfWork unitOfWork,

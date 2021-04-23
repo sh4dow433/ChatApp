@@ -19,7 +19,7 @@ async function fetchData(url = '', method, headers, data = {}) {
             "status": response.status,
             "data": await response.json() 
         }
-    } else if (method == "GET") {
+    } else {
         const response = await fetch(url, {
             method: 'GET', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, *cors, same-origin

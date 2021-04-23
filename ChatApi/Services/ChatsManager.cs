@@ -150,6 +150,7 @@ namespace ChatApi.Services
                 return;
             _unitOfWork.Chats.Delete(chat);
             _unitOfWork.SaveChanges();
+
             foreach (var user in chat.UsersChats.Select(uc => uc.User))
             {
                 if (_connectedUsers.ContainsKey(user))
