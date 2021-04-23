@@ -21,6 +21,7 @@ namespace ChatApi.Services
         private readonly IHubContext<ChatHub> _hub;
         private readonly IMapper _mapper;
         private readonly ConcurrentDictionary<AppUser, string> _connectedUsers;
+        private readonly JsonSerializerSettings _settings;
 
         public ChatsManager(IUnitOfWork unitOfWork,
             IConnectionsManager connectionsManager,
@@ -33,6 +34,11 @@ namespace ChatApi.Services
             _mapper = mapper;
             _connectedUsers = _connectionsManager.ConnectedUsersByAppUser;
 
+            _settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            };
         }
 
         public async Task SendMessageAsync(Message message)
@@ -44,12 +50,8 @@ namespace ChatApi.Services
             _unitOfWork.Messages.Insert(message);
             _unitOfWork.SaveChanges();
 
-            var settings = new JsonSerializerSettings();
-            settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-
             var messageReadDto = _mapper.Map<MessageReadDto>(message);
-            var messageReadDtoString = JsonConvert.SerializeObject(messageReadDto, settings);
+            var messageReadDtoString = JsonConvert.SerializeObject(messageReadDto, _settings);
 
             foreach (var userChat in message.Chat.UsersChats.ToList())
             {
@@ -128,14 +130,10 @@ namespace ChatApi.Services
             chat.Name = StringSanitizer.CleanName(chat.Name);
 
             _unitOfWork.Chats.Insert(chat);
-            _unitOfWork.SaveChanges();
-
-            var settings = new JsonSerializerSettings();
-            settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            _unitOfWork.SaveChanges();           
 
             var chatReadDto = _mapper.Map<ChatReadDto>(chat);
-            var chatReadDtoString = JsonConvert.SerializeObject(chatReadDto,settings);
+            var chatReadDtoString = JsonConvert.SerializeObject(chatReadDto,_settings);
             foreach (var user in chat.UsersChats.Select(uc => uc.User))
             {
                 if (_connectedUsers.ContainsKey(user))
@@ -195,15 +193,11 @@ namespace ChatApi.Services
             _unitOfWork.UsersChats.Insert(userChat);
             _unitOfWork.SaveChanges();
 
-            var settings = new JsonSerializerSettings();
-            settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-
             var chatReadDto = _mapper.Map<ChatReadDto>(chat);
-            var chatReadDtoString = JsonConvert.SerializeObject(chatReadDto, settings);
+            var chatReadDtoString = JsonConvert.SerializeObject(chatReadDto, _settings);
 
             var userChatDto = _mapper.Map<UsersChatsDto>(userChat);
-            var userChatDtoString = JsonConvert.SerializeObject(userChatDto, settings);
+            var userChatDtoString = JsonConvert.SerializeObject(userChatDto, _settings);
 
             foreach (var user in chat.UsersChats.Select(uc => uc.User))
             {
@@ -223,15 +217,13 @@ namespace ChatApi.Services
             var chat = _unitOfWork.Chats.GetByID(chatId);
             var userToRemove = _unitOfWork.Users.GetByID(userId);
             var userChat = _unitOfWork.UsersChats.Get(uc => uc.Chat == chat && uc.User == userToRemove);
+
             _unitOfWork.UsersChats.Delete(userChat);
             _unitOfWork.SaveChanges();
 
             var chatReadDto = _mapper.Map<ChatReadDto>(chat);
-            var settings = new JsonSerializerSettings();
-            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-
-            settings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-            var chatReadDtoString = JsonConvert.SerializeObject(chatReadDto, settings);
+            var chatReadDtoString = JsonConvert.SerializeObject(chatReadDto, _settings);
+            
             foreach (var user in chat.UsersChats.Select(uc => uc.User))
             {
                 if (_connectedUsers.ContainsKey(user))
