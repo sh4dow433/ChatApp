@@ -18,14 +18,18 @@ namespace ChatApi.Repositories
         {
             return _dbContext.Chats
                .Include(c => c.Messages)
-                        //.OrderByDescending(m => m.Date)
-                        //.Take(25))
+                    //.OrderByDescending(m => m.Date)
+                    //.Take(25))
                     .ThenInclude(m => m.Sender)
                 .Include(c => c.UsersChats)
                     .ThenInclude(uc => uc.User)
                         .ThenInclude(u => u.FriendShips)
                             .ThenInclude(fs => fs.Friend)
                                 .ThenInclude(f => f.User)
+                .Include(c => c.UsersChats)
+                    .ThenInclude(uc => uc.User)
+                        .ThenInclude(u => u.UsersChats)
+                            .ThenInclude(uc => uc.Chat)
                 .FirstOrDefault(c => c.Id == (int)id);
         }
         public override IEnumerable<Chat> GetAll()

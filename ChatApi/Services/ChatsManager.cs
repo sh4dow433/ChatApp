@@ -153,9 +153,18 @@ namespace ChatApi.Services
 
             foreach (var user in chat.UsersChats.Select(uc => uc.User))
             {
+                bool refresh = false;
+                if (user.UsersChats.Where(uc => uc.IsActive).Count() == 0)
+                {
+                    refresh = true;
+                    user.UsersChats.FirstOrDefault().IsActive = true;
+                    _unitOfWork.Update(user);
+                    _unitOfWork.SaveChanges();
+                }
+      
                 if (_connectedUsers.ContainsKey(user))
                 {
-                    await _hub.Clients.Client(_connectedUsers[user]).SendAsync("ChatDeleted", chatId);
+                    await _hub.Clients.Client(_connectedUsers[user]).SendAsync("ChatDeleted", chatId, refresh);
                 }
             }
         }

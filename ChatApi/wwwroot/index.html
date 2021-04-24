@@ -68,7 +68,20 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-
+    <!-- chat deleted -->
+    <div id="chat-deleted-successfully" class="d-none mb-0 alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Chat was deleted</strong>
+        <button type="button" class="close" onclick="$('#chat-deleted-successfully').addClass('d-none')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <!-- chat was not deleted -->
+    <div id="chat-deletion-failed" class="d-none mb-0 alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Chat couldn't be deleted</strong>
+        <button type="button" class="close" onclick="$('#chat-deletion-failed').addClass('d-none')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
     <main>
     </main>
 

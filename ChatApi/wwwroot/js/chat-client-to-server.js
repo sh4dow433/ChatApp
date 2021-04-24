@@ -21,11 +21,11 @@ function deleteMessage() {
 }
 
 function seenChat(chatId) {
-    var userChat = getUserChatFromArrayById(activeChatId);
+    var userChat = getUserChatFromArrayByChatId(activeChatId);
     if (userChat != null) {
         userChat.isActive = false;
     }
-    var newUserChat = getUserChatFromArrayById(chatId);
+    var newUserChat = getUserChatFromArrayByChatId(chatId);
     newUserChat.isActive = true;
     newUserChat.notSeenMessagesNumber = 0;
     activeChatId = chatId;
@@ -74,10 +74,10 @@ async function deleteChat(chatId) {
         'Authorization': 'Bearer ' + getCookie("accessToken")
     }
     var result = await fetchData('api/chats/delete/' + chatId, 'DELETE', headers);
-    if (result.status == 204) {
+    if (result.status == 200) {
         console.log('chat deleted successfully');
-        // $('#chat-deleted-successfully').removeClass('d-none');
+        $('#chat-deleted-successfully').removeClass('d-none');
     } else {
-        // $('#chat-deletion-failed').removeClass('d-none');
+        $('#chat-deletion-failed').removeClass('d-none');
     }
 }

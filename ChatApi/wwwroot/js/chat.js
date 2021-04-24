@@ -17,12 +17,12 @@ async function getChats() {
     console.log(response);
     if (response.status == 200) {
         response.data.usersChats.forEach(userChat => {
-            addChatToArray(userChat);
+            addUserChatToArray(userChat);
         });
     }
 }
 //get userChat from list
-function getUserChatFromArrayById(chatId) {
+function getUserChatFromArrayByChatId(chatId) {
     var userChat;
     groupUserChats.forEach(element => {
         if (element.chat.id == chatId) {
@@ -55,7 +55,7 @@ function getChatFromArrayById(chatId) {
     });
     return chat;
 }
-function addChatToArray(userChat) {
+function addUserChatToArray(userChat) {
     if (userChat.chat.isGroupChat) {
         groupUserChats.push(userChat);
         groupUserChats.sort((a, b) => (a.name > b.name) ? 1 : -1);
@@ -370,7 +370,6 @@ function loadChat(chatId, name = "") {
         <a class="dropdown-item text-danger text-center" href="#" onclick="leaveChat(` + chatId + `)">Leave group</a>
         <a class="dropdown-item text-danger text-center ` + active + `" href="#" onclick="return deleteChat(` + chatId + `);">Delete chat</a>
         `;
-// ^^^
 
     } else {
         var friendsId;
@@ -386,6 +385,7 @@ function loadChat(chatId, name = "") {
         `;
     }
     dropdownSettings.html(dropdownHtml);
+// ^^^
 
 
     var messageList = $(".message-list");
