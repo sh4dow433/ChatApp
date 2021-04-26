@@ -157,7 +157,11 @@ namespace ChatApi.Services
                 if (user.UsersChats.Where(uc => uc.IsActive).Count() == 0)
                 {
                     refresh = true;
-                    user.UsersChats.FirstOrDefault().IsActive = true;
+                    var uc = user.UsersChats.FirstOrDefault();
+                    if (uc != null)
+                    {
+                        uc.IsActive = true;
+                    }
                     _unitOfWork.Update(user);
                     _unitOfWork.SaveChanges();
                 }
@@ -215,7 +219,7 @@ namespace ChatApi.Services
                 {
                     if (user == userToAdd)
                     {
-                        await _hub.Clients.Client(_connectedUsers[user]).SendAsync("NewChatAdded", chatReadDtoString);
+                        await _hub.Clients.Client(_connectedUsers[user]).SendAsync("NewChatCreated", chatReadDtoString);
                     }
                     await _hub.Clients.Client(_connectedUsers[user]).SendAsync("UserAddedToChat", userChatDtoString, chatId);
                 }

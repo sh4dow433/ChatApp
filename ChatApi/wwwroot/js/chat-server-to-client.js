@@ -54,6 +54,9 @@ hubConnection.on("NewChatCreated", async function (chat) {
 
 hubConnection.on("ChatDeleted", async function (chatId, refresh) {
     console.log('chat deleted (sr)');
+    var r = confirm('Do you really want to delete this group chat?');
+    if (!r)
+        return;
     if (refresh) {
         await getChats();
         updateChatsUI();
@@ -80,4 +83,11 @@ hubConnection.on("ChatDeleted", async function (chatId, refresh) {
         removeChatFromArray(chatId);
         updateChatsUI();
     }
+});
+
+hubConnection.on('UserAddedToChat', function (userChatDtoString, chatId) {
+    console.log('in user added to chat func');
+    var userChat = JSON.parse(userChatDtoString);
+    var chat = getChatFromArrayById(chatId);
+    chat.usersChats.push(userChat);
 });

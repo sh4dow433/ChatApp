@@ -14,10 +14,12 @@ namespace ChatApi.Services
             if (message == null)
                 return null;
             message = Regex.Replace(message, "<.*?>", String.Empty);
-            message = Regex.Replace(message, @"^(http|https|ftp)\://[a-zA-Z0-9\-\.]+" +
-                         @"\.[a-zA-Z]{2,3}(:[a-zA-Z0-9]*)?/?" +
-                         @"([a-zA-Z0-9\-\._\?\,\'/\\\+&amp;%\$#\=~])*$",
-                         "<a href=\"$1\">$1</a>");
+            //message = Regex.Replace(message, @"^(http|https|ftp)\://[a-zA-Z0-9\-\.]+" +
+            //             @"\.[a-zA-Z]{2,3}(:[a-zA-Z0-9]*)?/?" +
+            //             @"([a-zA-Z0-9\-\._\?\,\'/\\\+&amp;%\$#\=~])*$",
+            //             "<a href=\"$1\">$1</a>");
+            message = Regex.Replace(message, @"(https?://[^\s]+)",
+                         "<a href=\"$1\" target=\"_blank\">$1</a>");
             return message;
         }
 

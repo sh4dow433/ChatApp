@@ -86,7 +86,8 @@
                 <div class="spinner-border text-center mt-2 text-info"></div>
             </h5>
             <div class="ml-auto btn-group dropleft">
-                <button type="button" class="chat-settings-btn btn bg-white"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button type="button" class="chat-settings-btn btn bg-white" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
                     <b>&#8942;&nbsp;</b>
                 </button>
                 <div id="chat-setting-dropdown" class="dropdown-menu">
@@ -250,8 +251,8 @@
     </div>
 </div>
 <!-- add user to chat -->
-<div class="modal fade" id="add-user-to-chat-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
+<div class="modal fade" id="add-user-to-chat-modal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -261,19 +262,15 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="list-group list-group-flush scrollable">
-                    <a href="#" class="list-group-item list-group-item-action">Cras justo odio</a>
-                    <a href="#" class="list-group-item list-group-item-action">Cras justo odio</a>
-                    <a href="#" class="list-group-item list-group-item-action">Cras justo odio</a>
-                    <a href="#" class="list-group-item list-group-item-action">Cras justo odio</a>
+                <div class="form-group">
+                    <label for="user-to-add" class="col-form-label text-secondary">&nbsp;Friend's Name:</label>
+                    <input type="text" class="form-control" style="height: 50px;" id="user-to-add">
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <!-- <button type="button" class="btn btn-info" onclick="return addUserToChat();">Add user</button> -->
+                <button type="button" class="btn btn-info" onclick="return addUserToChat();">Add user</button>
             </div>
-            <script>
-            </script>
         </div>
     </div>
 </div>

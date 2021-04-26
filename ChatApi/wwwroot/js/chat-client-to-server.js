@@ -39,12 +39,51 @@ function seenChat(chatId) {
 }
 
 
-function addUserToChat() {
+async function addUserToChat() {
+    var userToAdd = $('#user-to-add').val();
+    var userId = null;
+    friendUserChats.forEach(element => {
+        element.chat.usersChats.forEach(el => {
+            if (el.user.userName == userToAdd) {
+                userId = el.user.id;
+            }
+        });
+    });
+    if (userId == null) {
+        $('#user-is-not-friend').removeClass('d-none');
+    }
+    var data = {
+        'chatId': activeChatId,
+        'userId': userId
+    };
 
+    var headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getCookie("accessToken")
+    };
+    var result = await fetchData('api/chats/addToChat', 'POST', headers, data);
+    if (result.status == 200) {
+        $('#user-added-to-chat').removeClass('d-none');
+    }
 }
 
-function removeUserFromChat() {
+function removeUserFromChat(chatId, userId = null) {
+    if (userId == null) {
+        userId = getCookie('userId');
+    }
+      var data = {
+        'chatId': chatId,
+        'userId': userId
+    };
 
+    var headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getCookie("accessToken")
+    };
+    var result = await fetchData('api/chats/removeFromChat', 'POST', headers, data);
+    if (result.status == 200) {
+        $('#user-removed-from-chat').removeClass('d-none');
+    }
 }
 
 async function createChat() {

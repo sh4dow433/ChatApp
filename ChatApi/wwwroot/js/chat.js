@@ -367,7 +367,7 @@ function loadChat(chatId, name = "") {
         <a class="dropdown-item  text-center" href="#" data-toggle="modal" data-target="#add-user-to-chat-modal">Add person</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item text-center ` + active + `" href="#" onclick="changeChatName(` + chatId + `)">Change name</a>
-        <a class="dropdown-item text-danger text-center" href="#" onclick="leaveChat(` + chatId + `)">Leave group</a>
+        <a class="dropdown-item text-danger text-center" href="#" onclick="removeUserFromChat(` + chatId + `)">Leave group</a>
         <a class="dropdown-item text-danger text-center ` + active + `" href="#" onclick="return deleteChat(` + chatId + `);">Delete chat</a>
         `;
 
@@ -464,3 +464,5 @@ function loadChat(chatId, name = "") {
     messageList.html(htmlResult);
     messageList.scrollTop(messageList[0].scrollHeight);
 }
+
+

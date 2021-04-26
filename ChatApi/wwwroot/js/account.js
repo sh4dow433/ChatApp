@@ -149,7 +149,6 @@ function removeFriend() {
 }
 
 
-
 // COOKIE
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
