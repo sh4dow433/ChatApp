@@ -12,7 +12,7 @@ namespace ChatApi.Models
         [Required]
         public Chat Chat { get; set; }
         [Required]
-        [MaxLength(100)]
+        [MaxLength(250)]
         public string Text { get; set; }
         [Required]
         public DateTime Date { get; set; } = DateTime.Now;

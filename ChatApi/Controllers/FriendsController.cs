@@ -95,11 +95,15 @@ namespace ChatApi.Controllers
         public async Task<IActionResult> RemoveFriend([FromBody] RemoveFriendDto removeFriendDto)
         {
             var user = await _signInManager.UserManager.FindByIdAsync(removeFriendDto.UserId);
+            if (user != await _signInManager.UserManager.GetUserAsync(User))
+            {
+                return Unauthorized();
+            }
             var friend = await _signInManager.UserManager.FindByIdAsync(removeFriendDto.FriendId);
             var result = await _friendsManager.RemoveFriendAsync(user, friend);
             if (result)
             {
-                return Ok();
+                return Ok(removeFriendDto);
             }
             else
             {

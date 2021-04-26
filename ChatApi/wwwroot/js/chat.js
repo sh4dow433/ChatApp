@@ -266,15 +266,14 @@ function updateChatsUI() {
     $(".groups").html(groupsHtml);
 }
 
-// HELPER FUNCTIOS
+// HELPER FUNCTIONS
 function arrayRemove(arr, value) {
     console.log('in array remove');
     return arr.filter(function (ele) {
         return ele != value;
     });
 }
-
-
+// ^^
 function buildMessage(id, name, text, image,  date, seenByString, isMine = false, isRemoved) {
     var result;
     if (!isMine) {
@@ -382,9 +381,9 @@ function loadChat(chatId, name = "") {
             }
         });
         dropdownHtml = `
-        <a class="dropdown-item text-center" href="#" onclick="viewProfile(` + friendsId + `)">View Profile</a>
+        <a class="dropdown-item text-center" href="#" onclick="viewProfile('` + friendsId + `')">View Profile</a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item text-danger text-center" href="#" onclick="removeFriend(` + friendsId + `)">Remove friend</a>
+        <a class="dropdown-item text-danger text-center" href="#" onclick="removeFriend('` + friendsId + `')">Remove friend</a>
         `;
     }
     dropdownSettings.html(dropdownHtml);

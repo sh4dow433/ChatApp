@@ -35,7 +35,17 @@ hubConnection.on("FriendOffline", function (userId) {
     friendOffline(userId);
     updateChatsUI();
 });
-
+hubConnection.on('FriendRemoved', function (friendDtoString) {
+    var friend = JSON.parse(friendDtoString);
+    friendUserChats.forEach(element => {
+        element.chat.usersChats.forEach(el => {
+            if (el.user.id == friend.id) {
+                friendUserChats = arrayRemove(friendUserChats, element);
+                return;
+            }
+        });
+    });
+});
 hubConnection.on("NewChatCreated", async function (chat) {
     chat = JSON.parse(chat);
     console.log('new chat created');

@@ -144,8 +144,22 @@ async function addFriend(e) {
     return false;
 }
 
-function removeFriend() {
-
+async function removeFriend(friendsId) {
+    var r = confirm('Do you wanna remove this friend?');
+    if (!r)
+        return;
+    var headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getCookie("accessToken")
+    };
+    var data = {
+        'userId': getCookie('userId'),
+        'friendId': friendsId
+    };
+    var result = await fetchData('api/friends/remove', 'POST', headers, data);
+    if (result.status == 200) {
+        $('#friend-removed').removeClass('d-none');
+    }
 }
 
 
