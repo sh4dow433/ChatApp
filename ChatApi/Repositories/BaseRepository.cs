@@ -44,7 +44,7 @@ namespace ChatApi.Repositories
             _dbContext.Set<TEntity>().Remove(entityToDelete);
         }
 
-        public void Delete(object id)
+        public void DeleteById(object id)
         {
             var entity = _dbContext.Set<TEntity>().Find(id);
             Delete(entity);

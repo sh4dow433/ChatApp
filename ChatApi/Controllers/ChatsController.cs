@@ -97,6 +97,10 @@ namespace ChatApi.Controllers
             {
                 return Unauthorized();
             }
+            if (chat.UsersChats.Where(uc => uc.User.Id == addUserToChatDto.UserId).Count() > 0)
+            {
+                return Conflict(addUserToChatDto);
+            }
             await _chatsManager.AddUserToChatAsync(addUserToChatDto.ChatId, addUserToChatDto.UserId);
             return Ok(addUserToChatDto);
         }

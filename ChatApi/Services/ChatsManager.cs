@@ -124,7 +124,7 @@ namespace ChatApi.Services
 
         public async Task CreateChatAsync(Chat chat)
         {
-            ///////////////
+            /////////////// throw
             if (chat == null)
                 return;
             chat.Name = StringSanitizer.CleanName(chat.Name);
@@ -176,7 +176,7 @@ namespace ChatApi.Services
         public async Task UpdateChatNameAsync(int chatId, string name)
         {
             var chat = _unitOfWork.Chats.GetByID(chatId);
-            //
+            /////////throw
             if (chat == null)
                 return;
 
@@ -230,25 +230,62 @@ namespace ChatApi.Services
         {
             var chat = _unitOfWork.Chats.GetByID(chatId);
             var userToRemove = _unitOfWork.Users.GetByID(userId);
-            var userChat = _unitOfWork.UsersChats.Get(uc => uc.Chat == chat && uc.User == userToRemove);
+            var userChat = _unitOfWork.UsersChats.Get(uc => uc.Chat == chat && uc.User == userToRemove).FirstOrDefault();
+            var refresh = false;
 
-            _unitOfWork.UsersChats.Delete(userChat);
-            _unitOfWork.SaveChanges();
+            if (userChat == null)
+            {
+                /////////// throw
+                return;
+            }
+            // check if user to remove is the owner
+            if (chat.Owner == userToRemove)
+            {
+                if (chat.UsersChats.Count() > 1)
+                {
+                    var newOwner = chat.UsersChats.Where(uc => uc.User != userToRemove).Select(uc => uc.User).FirstOrDefault();
+                    chat.Owner = newOwner;
+                    _unitOfWork.Update(chat);
+                    _unitOfWork.SaveChanges();
+                }
+                else
+                {
+                    await DeleteChatAsync(chatId);
+                    return;
+                }
+            }
+            if (userChat.IsActive == true)
+            {
+                // set another chat to active before deleting this one
+                var uc = userToRemove.UsersChats.FirstOrDefault();
+                if (uc == null)
+                {
+                    //////////////////////// throw
+                    return;
+                }
+                uc.IsActive = true;
+                refresh = true;
+            }
+
 
             var chatReadDto = _mapper.Map<ChatReadDto>(chat);
             var chatReadDtoString = JsonConvert.SerializeObject(chatReadDto, _settings);
             
             foreach (var user in chat.UsersChats.Select(uc => uc.User))
             {
+
                 if (_connectedUsers.ContainsKey(user))
                 {
-                    if (user == userToRemove)
+                    if (user.Id == userToRemove.Id)
                     {
-                        await _hub.Clients.Client(_connectedUsers[user]).SendAsync("ChatDeleted", chatId);
+                        await _hub.Clients.Client(_connectedUsers[user]).SendAsync("ChatDeleted", chatId, refresh);
                     }
                     await _hub.Clients.Client(_connectedUsers[user]).SendAsync("UserRemovedFromChat", userId, chatId);
                 }
             }
+
+            _unitOfWork.UsersChats.Delete(userChat);
+            _unitOfWork.SaveChanges();
         }
     }
 }

@@ -81,8 +81,8 @@ namespace ChatApi.Services
             var friendShip = _unitOfWork.FriendShips.Get(fs => fs.Friend == friend && fs.User == user);
             var friendShip1 = _unitOfWork.FriendShips.Get(fs => fs.Friend == user.Friend && fs.User == friendUser);
 
-            _unitOfWork.FriendShips.Delete(friendShip);
-            _unitOfWork.FriendShips.Delete(friendShip1);
+            _unitOfWork.FriendShips.DeleteById(friendShip);
+            _unitOfWork.FriendShips.DeleteById(friendShip1);
             _unitOfWork.SaveChanges();
 
             if (_connectedUsers.ContainsKey(user))

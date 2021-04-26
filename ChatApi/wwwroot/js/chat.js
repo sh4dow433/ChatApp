@@ -80,7 +80,7 @@ function removeChatFromArray(chatId) {
     });
 }
 
-function addUserToChat(userChat, chatId) {
+function addUserToChatArray(userChat, chatId) {
     groupUserChats.forEach(element => {
         if (element.chat.id == chatId) {
             element.chat.usersChats.push(userChat);
@@ -89,11 +89,13 @@ function addUserToChat(userChat, chatId) {
     });
 }
 
-function removeUserFromChat(userChatId) {
+function removeUserFromChatArray(userChatId) {
+    console.log ('in remove user from chat array');
     groupUserChats.forEach(element => {
         element.chat.usersChats.forEach(userChat => {
             if (userChat.id == userChatId){
                 usersChats = arrayRemove(usersChats, userChat);
+                console.log('user removed');
                 return;
             } 
         });
@@ -266,6 +268,7 @@ function updateChatsUI() {
 
 // HELPER FUNCTIOS
 function arrayRemove(arr, value) {
+    console.log('in array remove');
     return arr.filter(function (ele) {
         return ele != value;
     });
@@ -368,7 +371,7 @@ function loadChat(chatId, name = "") {
         <div class="dropdown-divider"></div>
         <a class="dropdown-item text-center ` + active + `" href="#" onclick="changeChatName(` + chatId + `)">Change name</a>
         <a class="dropdown-item text-danger text-center" href="#" onclick="removeUserFromChat(` + chatId + `)">Leave group</a>
-        <a class="dropdown-item text-danger text-center ` + active + `" href="#" onclick="return deleteChat(` + chatId + `);">Delete chat</a>
+        <a class="dropdown-item text-danger text-center ` + active + `" href="#" onclick="deleteChat(` + chatId + `);">Delete chat</a>
         `;
 
     } else {

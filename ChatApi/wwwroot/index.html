@@ -106,10 +106,24 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
+    <!-- user already added to chat -->
+    <div id="user-already-added-to-chat" class="d-none mb-0 alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>User was already added to chat</strong>
+        <button type="button" class="close" onclick="$('#user-already-added-to-chat').addClass('d-none')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
     <!-- user removed from chat -->
     <div id="user-removed-from-chat" class="d-none mb-0 alert alert-success alert-dismissible fade show" role="alert">
         <strong>User removed from chat</strong>
         <button type="button" class="close" onclick="$('#user-removed-from-chat').addClass('d-none')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <!-- user removed from chat -->
+    <div id="chat-removed" class="d-none mb-0 alert alert-success alert-dismissible fade show" role="alert">
+        <strong>You left the chat</strong>
+        <button type="button" class="close" onclick="$('#chat-removed').addClass('d-none')" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>

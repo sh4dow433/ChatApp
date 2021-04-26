@@ -14,6 +14,6 @@ namespace ChatApi.Repositories.Interfaces
         void Insert(TEntity entity);
 
         void Delete(TEntity entityToDelete);
-        void Delete(object id);
+        void DeleteById(object id);
     }
 }

@@ -54,9 +54,6 @@ hubConnection.on("NewChatCreated", async function (chat) {
 
 hubConnection.on("ChatDeleted", async function (chatId, refresh) {
     console.log('chat deleted (sr)');
-    var r = confirm('Do you really want to delete this group chat?');
-    if (!r)
-        return;
     if (refresh) {
         await getChats();
         updateChatsUI();
@@ -64,6 +61,7 @@ hubConnection.on("ChatDeleted", async function (chatId, refresh) {
             var chat = groupUserChats[0]?.chat;
             if (chat != null) {
                 loadChat(chat.id, chat.name);
+                seenChat(chat.id);
             } else {
                 chat = friendUserChats[0]?.chat;
                 if (chat != null) {
@@ -74,10 +72,13 @@ hubConnection.on("ChatDeleted", async function (chatId, refresh) {
                         }
                     });
                     loadChat(chat.id, friendName);
+                    seenChat(chat.id);
                 }
                 $('.chat-name').html("No chats found");
                 $('.message-list').html("<p class='text-center text-secondary'>Add a friend to start chatting</p>")
             }
+        } else {
+            loadChat(activeChatId, activeChatName);
         }
     } else {
         removeChatFromArray(chatId);
@@ -90,4 +91,16 @@ hubConnection.on('UserAddedToChat', function (userChatDtoString, chatId) {
     var userChat = JSON.parse(userChatDtoString);
     var chat = getChatFromArrayById(chatId);
     chat.usersChats.push(userChat);
+});
+
+
+hubConnection.on('UserRemovedFromChat', function (userId, chatId) {
+    console.log('in user remove from chat (sr)');
+    var chat = getChatFromArrayById(chatId);
+    chat.usersChats.forEach(element => {
+        if (element.user.id == userId) {
+            chat.usersChats = arrayRemove(chat.usersChats, element);
+            console.log('user removed')
+        }
+    });
 });
