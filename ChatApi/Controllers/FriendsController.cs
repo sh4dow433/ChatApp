@@ -94,12 +94,12 @@ namespace ChatApi.Controllers
         [Route("remove")]
         public async Task<IActionResult> RemoveFriend([FromBody] RemoveFriendDto removeFriendDto)
         {
-            var user = await _signInManager.UserManager.FindByIdAsync(removeFriendDto.UserId);
+            var user = _unitOfWork.Users.GetByID(removeFriendDto.UserId);
             if (user != await _signInManager.UserManager.GetUserAsync(User))
             {
                 return Unauthorized();
             }
-            var friend = await _signInManager.UserManager.FindByIdAsync(removeFriendDto.FriendId);
+            var friend = _unitOfWork.Users.GetByID(removeFriendDto.FriendId);
             var result = await _friendsManager.RemoveFriendAsync(user, friend);
             if (result)
             {

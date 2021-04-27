@@ -28,13 +28,13 @@ function getUserChatFromArrayByChatId(chatId) {
         if (element.chat.id == chatId) {
             userChat = element;
             return;
-        } 
+        }
     });
     friendUserChats.forEach(element => {
         if (element.chat.id == chatId) {
             userChat = element;
             return;
-        } 
+        }
     });
     return userChat;
 }
@@ -45,13 +45,13 @@ function getChatFromArrayById(chatId) {
         if (element.chat.id == chatId) {
             chat = element.chat;
             return;
-        } 
+        }
     });
     friendUserChats.forEach(element => {
         if (element.chat.id == chatId) {
             chat = element.chat;
             return;
-        } 
+        }
     });
     return chat;
 }
@@ -90,31 +90,33 @@ function addUserToChatArray(userChat, chatId) {
 }
 
 function removeUserFromChatArray(userChatId) {
-    console.log ('in remove user from chat array');
+    console.log('in remove user from chat array');
     groupUserChats.forEach(element => {
         element.chat.usersChats.forEach(userChat => {
-            if (userChat.id == userChatId){
+            if (userChat.id == userChatId) {
                 usersChats = arrayRemove(usersChats, userChat);
                 console.log('user removed');
                 return;
-            } 
+            }
         });
     });
 }
 
 function addMessageToChat(message) {
-    console.log ('add message');
+    console.log('add message');
     console.log(groupUserChats);
     console.log(friendUserChats);
     console.log(message);
     groupUserChats.forEach(element => {
-        if(element.chat.id == message.chat.id) {
+        if (element.chat.id == message.chat.id) {
+            element.notSeenMessagesNumber++;
             element.chat.messages.push(message);
             return;
         }
     });
     friendUserChats.forEach(element => {
-        if(element.chat.id == message.chat.id) {
+        if (element.chat.id == message.chat.id) {
+            element.notSeenMessagesNumber++;
             element.chat.messages.push(message);
             return;
         }
@@ -190,7 +192,7 @@ function chatNameUpdated() {
 
 
 function updateChatsUI() {
-    console.log("updateUi");  
+    console.log("updateUi");
     var friendsHtml = ``;
     var groupsHtml = ``;
 
@@ -212,7 +214,7 @@ function updateChatsUI() {
             activeChatName = chatName;
         }
         groupsHtml += `
-        <a href="#" onclick="return openChat(`+ id +`, '` + chatName + `');"
+        <a href="#" onclick="return openChat(`+ id + `, '` + chatName + `');"
         class="list-group-item ` + chatActive + ` list-group-item-action d-flex justify-content-between align-items-center">
         <div class="ml-0 pl-0">
             <img src="` + image + `" alt="" class="img-fluid m-0 p-0" width=30>
@@ -231,14 +233,14 @@ function updateChatsUI() {
         userChat.chat.usersChats.forEach(uc => {
             if (uc.user.userName != getCookie("userName"))
                 name = uc.user.userName;
-                isActive = uc.user.isActive;
+            isActive = uc.user.isActive;
         });
         var unreadMessages = userChat.notSeenMessagesNumber == 0 ? "" : userChat.notSeenMessagesNumber;
         var chatActive = "";
 
         /// get image first
         var image = "/img/cover.jpg";
-        
+
         var nameColour = 'text-secondary';
         if (userChat.isActive) {
             chatActive = 'bg-info';
@@ -250,7 +252,7 @@ function updateChatsUI() {
             nameColour = 'text-primary font-weight-bold';
         }
         friendsHtml += `
-        <a href="#" onclick="return openChat(`+ id +`, '` + name + `');"
+        <a href="#" onclick="return openChat(`+ id + `, '` + name + `');"
         class="list-group-item ` + chatActive + ` list-group-item-action d-flex justify-content-between align-items-center">
         <div class="ml-0 pl-0">
             <img src="` + image + `" alt="" class="img-fluid m-0 p-0" width=30>
@@ -274,7 +276,7 @@ function arrayRemove(arr, value) {
     });
 }
 // ^^
-function buildMessage(id, name, text, image,  date, seenByString, isMine = false, isRemoved) {
+function buildMessage(id, name, text, image, date, seenByString, isMine = false, isRemoved) {
     var result;
     if (!isMine) {
         if (isRemoved == true) {
@@ -313,7 +315,7 @@ function buildMessage(id, name, text, image,  date, seenByString, isMine = false
             </div>
             <div class="row px-4 text-dark">
                 <p>` + text + `</p>
-                <small class="collapse ml-auto mt-5 text-right text-secondary" id="collapse-` + id + `" >Seen by: ` + seenByString +`</small>
+                <small class="collapse ml-auto mt-5 text-right text-secondary" id="collapse-` + id + `" >Seen by: ` + seenByString + `</small>
             </div>
         </button>
         </div>
@@ -365,7 +367,7 @@ function loadChat(chatId, name = "") {
             active = '';
         }
         dropdownHtml = `
-        <a class="dropdown-item text-center" href="#" onclick="viewChatsParticipants(` + chatId + `)">View participants</a>
+        <a class="dropdown-item text-center" href="#" onclick="viewChatParticipants(` + chatId + `)">View participants</a>
         <a class="dropdown-item  text-center" href="#" data-toggle="modal" data-target="#add-user-to-chat-modal">Add person</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item text-center ` + active + `" href="#" onclick="changeChatName(` + chatId + `)">Change name</a>
@@ -387,7 +389,7 @@ function loadChat(chatId, name = "") {
         `;
     }
     dropdownSettings.html(dropdownHtml);
-// ^^^
+    // ^^^
 
 
     var messageList = $(".message-list");
@@ -395,7 +397,7 @@ function loadChat(chatId, name = "") {
 
     if (name != '') {
         chatName.html("&nbsp; " + name);
-     }
+    }
     var dict = [];
     var messages = chat.messages;
     if (messages.length == 0) {
@@ -419,7 +421,7 @@ function loadChat(chatId, name = "") {
             user: userChat.user
         });
     });
-    dict.sort(function(a, b) {
+    dict.sort(function (a, b) {
         return new Date(a.date) - new Date(b.date);
     });
     console.log(dict);
@@ -434,7 +436,6 @@ function loadChat(chatId, name = "") {
         var isMine = false;
         if (element.isMessage) {
             if (seenBarElements.length > 0) {
-                console.log('ar tb sa intre in build seen bar')
                 htmlResult += buildSeenBar(seenBarElements);
                 seenBarElements = [];
             }
@@ -444,7 +445,6 @@ function loadChat(chatId, name = "") {
             var seenByString = '';
             dict.forEach(el => {
                 if (el.isMessage == false && el.date > element.date) {
-                    console.log('in if');
                     seenByString += " " + el.user.userName;
                 }
             });
@@ -456,7 +456,6 @@ function loadChat(chatId, name = "") {
             }
             htmlResult += buildMessage(element.message.id, element.message.sender.userName, element.message.text, profilePicString, element.date, seenByString, isMine, element.message.isRemoved)
         } else {
-            console.log('in else');
             seenBarElements.push(element);
         }
     });
@@ -467,4 +466,23 @@ function loadChat(chatId, name = "") {
     messageList.scrollTop(messageList[0].scrollHeight);
 }
 
+function viewChatParticipants(chatId) {
 
+    $('#view-chat-participants-modal').modal();
+    $('#view-chat-participants-modal').on('shown.bs.modal', function () {
+        var chat = getChatFromArrayById(chatId);
+        var htmlCode = ``;
+        chat.usersChats.forEach(element => {
+            var user = element.user
+            var textColor = 'text-secondary';
+            if (user.id == chat.owner.id) {
+                textColor = 'text-success';
+            }
+                    
+            htmlCode += `
+                <a href="#" class="list-group-item list-group-item-action `+textColor+`" onclick="viewProfile('`+ user.id + `')">` + user.userName + `</a>
+            `;
+        });
+        $('#list-of-participants').html(htmlCode);
+    });
+}

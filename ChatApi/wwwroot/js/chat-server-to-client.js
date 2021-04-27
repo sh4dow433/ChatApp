@@ -13,6 +13,8 @@ hubConnection.on('ReceiveMessage', async function (messageString) {
         });
         if (chatInView == message.chat.id) {
             loadChat(message.chat.id, name);
+        } else {
+            updateChatsUI();
         }
     }
 });
@@ -35,22 +37,12 @@ hubConnection.on("FriendOffline", function (userId) {
     friendOffline(userId);
     updateChatsUI();
 });
-hubConnection.on('FriendRemoved', function (friendDtoString) {
-    var friend = JSON.parse(friendDtoString);
-    friendUserChats.forEach(element => {
-        element.chat.usersChats.forEach(el => {
-            if (el.user.id == friend.id) {
-                friendUserChats = arrayRemove(friendUserChats, element);
-                return;
-            }
-        });
-    });
-});
+
 hubConnection.on("NewChatCreated", async function (chat) {
     chat = JSON.parse(chat);
     console.log('new chat created');
     await getChats();
-    if (chat.owner.id == getCookie("userId")) {
+    if (chat.isGroupChat && chat.owner.id == getCookie("userId")) {
         groupUserChats.forEach(element => {
             if (element.chat.id == chat.id) {
                 loadChat(chat.id, chat.name);
