@@ -472,16 +472,25 @@ function viewChatParticipants(chatId) {
     $('#view-chat-participants-modal').on('shown.bs.modal', function () {
         var chat = getChatFromArrayById(chatId);
         var htmlCode = ``;
+        var isOwner = false;
+        if (chat.owner.id == getCookie('userId')) {
+            isOwner = true;
+        }
         chat.usersChats.forEach(element => {
             var user = element.user
             var textColor = 'text-secondary';
             if (user.id == chat.owner.id) {
                 textColor = 'text-success';
             }
-                    
+
             htmlCode += `
-                <a href="#" class="list-group-item list-group-item-action `+textColor+`" onclick="viewProfile('`+ user.id + `')">` + user.userName + `</a>
-            `;
+                <a href="#" class="list-group-item list-group-item-action `+ textColor + `" onclick="viewProfile('` + user.id + `')">` + user.userName; 
+            if (isOwner) {
+                htmlCode += `
+                    <button href="#" class="float-right btn btn-sm btn-danger active" onclick="removeUserFromChat(` + chat.id + `, '` + user.id + `' ); $().button('dispose');">Remove</button> 
+                `;
+            }
+            htmlCode += `</a>`;
         });
         $('#list-of-participants').html(htmlCode);
     });

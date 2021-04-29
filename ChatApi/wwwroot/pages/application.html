@@ -291,7 +291,63 @@
                     <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
                     <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
                     <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
-                  </ul>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- settings page -->
+<div class="modal fade" id="settings-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-info">Settings</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group row mx-5">
+                        <label for="settings-email" class="col-sm-2 col-form-label col-form-label-sm">Email</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control form-control-sm" id="settings-email"
+                                placeholder="new email">
+                        </div>
+                    </div>
+                    <div class="form-group row mx-5">
+                        <div class="ml-auto col-sm-2">
+                            <button class="btn btn-warning">Change</button>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <div class="form-group row mx-5">
+                        <label for="settings-password"
+                            class="col-sm-2 col-form-label col-form-label-sm">Password</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control form-control-sm" id="settings-password"
+                                placeholder="new password">
+                        </div>
+                    </div>
+                    <div class="form-group row mx-5">
+                        <label for="settings-confirm-password" class="col-sm-2 col-form-label col-form-label-sm">Confirm
+                            Password</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control form-control-sm" id="settings-confirm-password"
+                                placeholder="confirm password">
+                        </div>
+                    </div>
+                    <div class="form-group row mx-5">
+                        <div class="ml-auto col-sm-2">
+                            <button class="btn btn-warning">Change</button>
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -17,7 +17,8 @@ namespace ChatApi.Repositories
         public override Chat GetByID(object id)
         {
             return _dbContext.Chats
-               .Include(c => c.Messages)
+                .Include(c => c.Owner)
+                .Include(c => c.Messages)
                     //.OrderByDescending(m => m.Date)
                     //.Take(25))
                     .ThenInclude(m => m.Sender)
