@@ -56,15 +56,46 @@ namespace ChatApi.Hubs
             await _chatsManager.SendMessageAsync(message);
         }
 
-        public async Task DeleteMessage(int id)
+        public async Task DeleteMessage(string userId, int messageId)
         {
-            await _chatsManager.DeleteMessageAsync(id);
+            var user = await _signInManager.UserManager.GetUserAsync(Context.User);
+            if (user.Id != userId)
+            {
+                string error = "You dont have the right to remove that message";
+                await SendErrorMsgToUser(user, error);
+                return;
+            }
+            var message = _unitOfWork.Messages.GetByID(messageId);
+            if (message == null)
+            {
+                var error = "Message not found";
+                await SendErrorMsgToUser(user, error);
+                return;
+            }
+            if (message.Sender.Id == userId)
+            {
+                await _chatsManager.DeleteMessageAsync(messageId);
+            }
+            else if (message.Chat.IsGroupChat && message.Chat.Owner.Id == userId)
+            {
+                await _chatsManager.DeleteMessageAsync(messageId);
+            }
+            else
+            {
+                string error = "You dont have the right to remove that message";
+                await SendErrorMsgToUser(user, error);
+            }
         }
 
         public async Task ChatSeen(string chatSeenDtoString)
         {
             var chatSeenDto = JsonConvert.DeserializeObject<ChatSeenDto>(chatSeenDtoString);
             await _chatsManager.ChatSeenAsync(chatSeenDto.ChatId, chatSeenDto.UserId);
+        }
+
+        private async Task SendErrorMsgToUser(AppUser user, string error)
+        {
+            await Clients.Client(_connectionManager.ConnectedUsersByAppUser[user]).SendAsync("Error", error);
         }
     }
 }

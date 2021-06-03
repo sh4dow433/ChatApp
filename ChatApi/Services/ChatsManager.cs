@@ -81,14 +81,19 @@ namespace ChatApi.Services
         {
             var message = _unitOfWork.Messages.GetByID(id);
             if (message == null)
+            {
                 return;
+            }
+
             message.IsRemoved = true;
+            _unitOfWork.SaveChanges();
+
             foreach (var userChat in message.Chat.UsersChats.ToList())
             {
                 var connectedUsers = _connectionsManager.ConnectedUsersByAppUser;
                 if (connectedUsers.ContainsKey(userChat.User))
                 {
-                    await _hub.Clients.Client(connectedUsers[userChat.User]).SendAsync("MessageDeleted", message.Chat.Id, id);
+                    await _hub.Clients.Client(connectedUsers[userChat.User]).SendAsync("MessageDeleted", id);
                 }
             }
         }

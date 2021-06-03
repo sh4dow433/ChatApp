@@ -16,8 +16,11 @@ async function sendMessage(chatId) {
     seenChat(chatId);
 }
 
-function deleteMessage(id) {
+function deleteMessage(messageId) {
     console.log('deleting msj... TODO');
+    var senderId = getCookie("userId");
+    hubConnection.invoke("DeleteMessage", senderId, messageId);
+    
 }
 
 function seenChat(chatId) {

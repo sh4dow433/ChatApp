@@ -19,6 +19,12 @@ hubConnection.on('ReceiveMessage', async function (messageString) {
     }
 });
 
+hubConnection.on('MessageDeleted', function (messageId) {
+    console.log('message deleted is called');
+    removeMessageFromChat(messageId);
+    loadChat(activeChatId, activeChatName);
+});
+
 
 hubConnection.on("ChatSeen", function (chatId, userId, lastSeen) {
     chatSeenByUser(chatId, userId, lastSeen);
@@ -105,4 +111,10 @@ hubConnection.on('UserRemovedFromChat', function (userId, chatId) {
             console.log('user removed')
         }
     });
+});
+
+hubConnection.on('Error', function(error) {
+    console.log('general-error:', error);
+    $('#general-error').removeClass('d-none');
+    $('#general-error-text').text(error);
 });
