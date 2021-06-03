@@ -281,14 +281,15 @@ function arrayRemove(arr, value) {
 function buildMessage(id, name, text, image, date, seenByString, isMine = false, isRemoved, isOwner) {
     var result;
     if (!isMine) {
-        if (isRemoved == true) {
-            text = 'Message was removed.';
-        }
-        var deleteButton = ``;
+        var deleteButton = '';
         if (isOwner) {
             deleteButton = `
                 <a class="text-danger" onclick="deleteMessage(`+id+`)">Remove message</a>
             `;
+        }
+        if (isRemoved == true) {
+            text = 'Message was removed.';
+            deleteButton = ``;
         }
         result = `
         <div class="message-box px-5 py-2 row m-0">
