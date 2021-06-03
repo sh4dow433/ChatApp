@@ -109,15 +109,17 @@ function addMessageToChat(message) {
     console.log(message);
     groupUserChats.forEach(element => {
         if (element.chat.id == message.chat.id) {
-            element.notSeenMessagesNumber++;
             element.chat.messages.push(message);
+            if (chatInView != element.chat.id)
+                element.notSeenMessagesNumber++;
             return;
         }
     });
     friendUserChats.forEach(element => {
         if (element.chat.id == message.chat.id) {
-            element.notSeenMessagesNumber++;
             element.chat.messages.push(message);
+            if (chatInView != element.chat.id)
+                element.notSeenMessagesNumber++;
             return;
         }
     });
@@ -276,11 +278,17 @@ function arrayRemove(arr, value) {
     });
 }
 // ^^
-function buildMessage(id, name, text, image, date, seenByString, isMine = false, isRemoved) {
+function buildMessage(id, name, text, image, date, seenByString, isMine = false, isRemoved, isOwner) {
     var result;
     if (!isMine) {
         if (isRemoved == true) {
             text = 'Message was removed.';
+        }
+        var deleteButton = ``;
+        if (isOwner) {
+            deleteButton = `
+                <a class="text-danger" onclick="deleteMessage(`+id+`)">Remove message</a>
+            `;
         }
         result = `
         <div class="message-box px-5 py-2 row m-0">
@@ -288,22 +296,25 @@ function buildMessage(id, name, text, image, date, seenByString, isMine = false,
                 <img src="` + image + `" alt="" class="img-fluid m-0 p-0">
             </div>
             <div class="message bg-light border">
-            <button class="btn container-fluid bg-light text-decoration-none" data-toggle="collapse" data-target="#collapse-` + id + `" aria-expanded="false" aria-controls="collapse-` + id + `">
-                <div class="row px-4">
-                    <div class="mt-2  text-info"><b>` + name + `</b></div>
-                    <div class="ml-auto mt-2  text-right text-secondary">` + new Date(date).toLocaleString() + `</div>
-                </div>
-                <div class="row px-4 text-dark">
-                    <p>` + text + `</p>
-                    <small class="collapse ml-auto mt-5 text-right text-secondary"  id="collapse-` + id + `">Seen by: ` + seenByString + `</small>
-                </div>
-            </button>
-            </div>
+                <button class="btn container-fluid bg-light text-decoration-none" data-toggle="collapse" data-target="#collapse-` + id + `" aria-expanded="false" aria-controls="collapse-` + id + `">
+                    <div class="row px-4">
+                        <div class="mt-2  text-info"><b>` + name + `</b></div>
+                        <div class="ml-auto mt-2  text-right text-secondary">` + new Date(date).toLocaleString() + `</div>
+                    </div>
+                    <div class="row px-4 text-dark">
+                        <p>` + text + `</p>
+                        <br><small class="collapse ml-auto mt-3 text-right text-secondary"  id="collapse-` + id + `">Seen by: ` + seenByString + `<br>` + deleteButton + `</small>
+                    </div>
+                </button>
+                
+            </div> 
         </div>
         `;
     } else {
+        var deleteButton = `<a class="text-danger" onclick="deleteMessage(`+id+`)">Remove message</a>`;
         if (isRemoved == true) {
             text = 'Message was removed.';
+            deleteButton = ``;
         }
         result = ` 
         <div class="ml-auto message-box px-5 py-2 row m-0">
@@ -315,7 +326,7 @@ function buildMessage(id, name, text, image, date, seenByString, isMine = false,
             </div>
             <div class="row px-4 text-dark">
                 <p>` + text + `</p>
-                <small class="collapse ml-auto mt-5 text-right text-secondary" id="collapse-` + id + `" >Seen by: ` + seenByString + `</small>
+                <br><small class="collapse ml-auto mt-3 text-right text-secondary" id="collapse-` + id + `" >Seen by: ` + seenByString + `<br>` + deleteButton + `</small>
             </div>
         </button>
         </div>
@@ -390,7 +401,10 @@ function loadChat(chatId, name = "") {
     }
     dropdownSettings.html(dropdownHtml);
     // ^^^
-
+    var isOwner = false;
+    if (chat.owner != null && chat.owner.id == getCookie('userId')) {
+        isOwner = true;
+    }
 
     var messageList = $(".message-list");
     var chatName = $('.chat-name');
@@ -454,7 +468,7 @@ function loadChat(chatId, name = "") {
                 console.log()
                 isMine = true;
             }
-            htmlResult += buildMessage(element.message.id, element.message.sender.userName, element.message.text, profilePicString, element.date, seenByString, isMine, element.message.isRemoved)
+            htmlResult += buildMessage(element.message.id, element.message.sender.userName, element.message.text, profilePicString, element.date, seenByString, isMine, element.message.isRemoved, isOwner)
         } else {
             seenBarElements.push(element);
         }
@@ -484,7 +498,7 @@ function viewChatParticipants(chatId) {
             }
 
             htmlCode += `
-                <a href="#" class="list-group-item list-group-item-action `+ textColor + `" onclick="viewProfile('` + user.id + `')">` + user.userName; 
+                <a href="#" class="list-group-item list-group-item-action `+ textColor + `" onclick="viewProfile('` + user.id + `')">` + user.userName;
             if (isOwner) {
                 htmlCode += `
                     <button href="#" class="float-right btn btn-sm btn-danger active" onclick="removeUserFromChat(` + chat.id + `, '` + user.id + `' ); $().button('dispose');">Remove</button> 

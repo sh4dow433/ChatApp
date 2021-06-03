@@ -4,8 +4,8 @@ namespace ChatApi.ServicesInterfaces
 {
     public interface IFilesManager
     {
-        RawFile GetFile(FileRecord fileRecord);
-        FileRecord SaveFile(RawFile file);
-        bool DeleteFile(FileRecord fileRecord);
+        FileModel GetFile(FileRecord fileRecord);
+        FileRecord SaveFile(FileModel file);
+        void DeleteFile(FileRecord fileRecord);
     }
 }

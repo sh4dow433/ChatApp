@@ -16,8 +16,8 @@ async function sendMessage(chatId) {
     seenChat(chatId);
 }
 
-function deleteMessage() {
-
+function deleteMessage(id) {
+    console.log('deleting msj... TODO');
 }
 
 function seenChat(chatId) {

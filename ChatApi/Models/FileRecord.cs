@@ -12,10 +12,8 @@ namespace ChatApi.Models
         [Required]
         public bool IsPhoto { get; set; }
         [Required]
-        public string Extension { get; set; }
-        [Required]
         public string Path { get; set; }
         [Required]
-        public DateTime Uploaded { get; set; } = DateTime.Now;
+        public DateTime Uploaded { get; set; }
     }
 }

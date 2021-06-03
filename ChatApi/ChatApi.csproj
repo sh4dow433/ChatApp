@@ -7,6 +7,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20210410165328_Innit.cs" />
     <Compile Remove="Migrations\20210410165328_Innit.Designer.cs" />
+    <Compile Remove="Migrations\20210603140917_Changed_FileModel.cs" />
+    <Compile Remove="Migrations\20210603140917_Changed_FileModel.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +29,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\files\images\" />
   </ItemGroup>
 
 
