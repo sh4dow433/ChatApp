@@ -18,6 +18,8 @@ using System.Threading.Tasks;
 using ChatApi.ServicesInterfaces;
 using ChatApi.Services;
 using Newtonsoft.Json;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace ChatApi
 {
@@ -127,7 +129,7 @@ namespace ChatApi
             app.UseStaticFiles();
 
             app.UseRouting();
-            
+
             app.UseAuthentication();
 
             app.UseAuthorization();

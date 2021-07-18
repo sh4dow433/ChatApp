@@ -153,9 +153,14 @@ namespace ChatApi.Controllers
 
         [HttpPost]
         [Route("newEmail")]
-        public async Task<IActionResult> ChangeEmail([FromBody] string newEmail)
+        public async Task<IActionResult> ChangeEmail([FromBody] NewEmailDto newEmailDto)
         {
-            var id = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "sub");
+            var newEmail = newEmailDto.NewEmail;
+            var id = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            if (id == null)
+            {
+                return NotFound();
+            }
             var user = await _userManager.FindByIdAsync(id.Value);
             if (newEmail == user.Email)
             {
@@ -183,7 +188,7 @@ namespace ChatApi.Controllers
             {
                 return ValidationProblem(ModelState);
             }
-            var id = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "sub");
+            var id = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(id.Value);
 
             var result = await _userManager.ChangePasswordAsync(user, changePasswordDto.OldPassword, changePasswordDto.Password);
@@ -197,7 +202,7 @@ namespace ChatApi.Controllers
         [Route("newUsername")]
         public async Task<IActionResult> ChangeName([FromBody] string newUsername)
         {
-            var id = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "sub");
+            var id = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(id.Value);
             if (await _userManager.FindByNameAsync(newUsername) != null)
             {

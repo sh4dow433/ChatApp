@@ -100,20 +100,42 @@ function logout() {
     $("main").load("pages/login.html");
 
     $("#logout-successful").removeClass("d-none");
-    $('#connection-lost').hide();
+    $("#connection-lost").hide();
     return false;
 }
 
 function changeName() {
-
+// todo
 }
 
 function changePassword() {
 
 }
 
-function changeEmail() {
+async function changeEmail() {
+    var newEmail = $('#settings-email').val();
+    var re = /\S+@\S+\.\S+/;
+    if(re.test(newEmail) == false) {
+        /// display err
+        console.log("CHANGE EMAIL: ERR1");
+        return;
+    }
 
+    var headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getCookie("accessToken")
+    }
+    var data = {
+        newEmail: newEmail
+    }
+
+    var resp = await fetchData("api/account/newEmail", "POST", headers, data);
+    console.log(resp);
+    if (resp.status == 200) {
+        // display msg
+    } else {
+        // display err
+    }
 }
 
 async function addFriend(e) {

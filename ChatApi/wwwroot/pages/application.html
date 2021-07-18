@@ -311,7 +311,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <div>
                     <div class="form-group row mx-5">
                         <label for="settings-email" class="col-sm-2 col-form-label col-form-label-sm">Email</label>
                         <div class="col-sm-10">
@@ -320,15 +320,23 @@
                         </div>
                     </div>
                     <div class="form-group row mx-5">
-                        <div class="ml-auto col-sm-2">
-                            <button class="btn btn-warning">Change</button>
+                        <div class="mr-auto col-sm-2">
+                            <button class="btn btn-warning" onclick="changeEmail()">Change</button>
                         </div>
                     </div>
 
                     <hr>
                     <div class="form-group row mx-5">
+                        <label for="settings-old-password"
+                            class="col-sm-2 col-form-label col-form-label-sm">Old Password</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control form-control-sm" id="settings-old-password"
+                                placeholder="old password">
+                        </div>
+                    </div>
+                    <div class="form-group row mx-5">
                         <label for="settings-password"
-                            class="col-sm-2 col-form-label col-form-label-sm">Password</label>
+                            class="col-sm-2 col-form-label col-form-label-sm">New Password</label>
                         <div class="col-sm-10">
                             <input type="password" class="form-control form-control-sm" id="settings-password"
                                 placeholder="new password">
@@ -343,11 +351,11 @@
                         </div>
                     </div>
                     <div class="form-group row mx-5">
-                        <div class="ml-auto col-sm-2">
+                        <div class="mr-auto col-sm-2">
                             <button class="btn btn-warning">Change</button>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
