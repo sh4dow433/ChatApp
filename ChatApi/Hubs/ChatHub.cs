@@ -82,7 +82,7 @@ namespace ChatApi.Hubs
             }
             else
             {
-                string error = "You dont have the right to remove that message";
+                string error = "You dont have the right to delete that message";
                 await SendErrorMsgToUser(user, error);
             }
         }

@@ -139,7 +139,8 @@ namespace ChatApi
                 .WithOrigins("null")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
-                .AllowCredentials());
+                .AllowCredentials()
+            );
 
             app.UseEndpoints(endpoints =>
             {
