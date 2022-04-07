@@ -30,8 +30,14 @@ namespace ChatApi.Services
 
         public FileRecord SaveFile(FileModel fileModel)
         {
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", fileModel.File.FileName);
-            using (Stream stream = new FileStream(path, FileMode.Create))
+            string fileName = Guid.NewGuid().ToString() + StringSanitizer.MakeValidFileName(fileModel.File.FileName);
+            string fileLocation = "files\\";
+            if (fileModel.IsPhoto)
+            {
+                fileLocation = "files\\images\\";
+            }
+            string fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", fileLocation, fileName);
+            using (Stream stream = new FileStream(fullPath, FileMode.Create))
             {
                 fileModel.File.CopyTo(stream);
             }
@@ -39,7 +45,7 @@ namespace ChatApi.Services
             {
                 FileName = fileModel.File.FileName,
                 IsPhoto = fileModel.IsPhoto,
-                Path = path,
+                FileLocation = fileLocation + fileName,
                 Uploaded = DateTime.Now
             };
             _unitOfWork.Files.Insert(fileRecord);

@@ -12,8 +12,7 @@ namespace ChatApi.Profiles
     {
         public FileProfile()
         {
-            CreateMap<FileRecord, FileReadDto>();
-            CreateMap<FileCreateDto, FileRecord>();
+            CreateMap<FileRecord, FileRecordReadDto>();
         }
     }
 }

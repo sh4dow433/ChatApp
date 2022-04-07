@@ -51,6 +51,11 @@ namespace ChatApi.Hubs
         {
             var messageCreateDto = JsonConvert.DeserializeObject<MessageCreateDto>(messageCreateDtoString);
             var message = _mapper.Map<Message>(messageCreateDto);
+            if (messageCreateDto.HasFile)
+            {
+                var fileRecord = _unitOfWork.Files.GetByID(messageCreateDto.FileId);
+                message.File = fileRecord;
+            }
             message.Chat = _unitOfWork.Chats.GetByID(messageCreateDto.ChatId);
             message.Sender = _unitOfWork.Users.GetByID(messageCreateDto.SenderId);
             await _chatsManager.SendMessageAsync(message);

@@ -197,6 +197,10 @@ function updateChatsUI() {
     console.log("updateUi");
     var friendsHtml = ``;
     var groupsHtml = ``;
+    
+    //todo 
+    activeChatId = null;
+    activeChatName = null;
 
     groupUserChats.forEach(userChat => {
         var id = userChat.chat.id;
@@ -206,7 +210,6 @@ function updateChatsUI() {
 
         /// get image first
         var image = "img/cover.jpg"
-
         var nameColour = 'text-secondary';
         if (userChat.isActive) {
             console.log('chat active')
@@ -278,13 +281,21 @@ function arrayRemove(arr, value) {
     });
 }
 // ^^
-function buildMessage(id, name, text, image, date, seenByString, isMine = false, isRemoved, isOwner) {
+function buildMessage(id, name, text, image, date, seenByString, isMine = false, isRemoved, isOwner, file = null) {
     var result;
+    // todo:
+    if (file != null) {
+        if (file.isPhoto) {
+            text = '<img class="img-fluid" src="' + baseUrl + file.fileLocation + '" alt="' + file.fileName + '"/>'
+        } else {
+            text = '<a href="' + baseUrl + file.fileLocation + '" target="_blank" >' + file.fileName + '</a>';
+        }
+    }
     if (!isMine) {
         var deleteButton = '';
         if (isOwner) {
             deleteButton = `
-                <a class="text-danger" onclick="deleteMessage(`+id+`)">Remove message</a>
+                <a class="text-danger" onclick="deleteMessage(`+ id + `)">Remove message</a>
             `;
         }
         if (isRemoved == true) {
@@ -312,7 +323,7 @@ function buildMessage(id, name, text, image, date, seenByString, isMine = false,
         </div>
         `;
     } else {
-        var deleteButton = `<a class="text-danger" onclick="deleteMessage(`+id+`)">Remove message</a>`;
+        var deleteButton = `<a class="text-danger" onclick="deleteMessage(` + id + `)">Remove message</a>`;
         if (isRemoved == true) {
             text = 'Message was removed.';
             deleteButton = ``;
@@ -360,6 +371,13 @@ function buildSeenBar(elements) {
 
 
 function loadChat(chatId, name = "") {
+    //todo
+    $('.add-photo-btn').attr('disabled', false);
+    $('.add-file-btn').attr('disabled', false);
+    $('#photo').attr('disabled', false);
+    $('#file').attr('disabled', false);
+    $('.send-message-btn').attr('disabled', false);
+    $('#chat-text').attr('disabled', false);
 
     chatInView = chatId;
     var chat = getChatFromArrayById(chatId);
@@ -381,9 +399,9 @@ function loadChat(chatId, name = "") {
         dropdownHtml = `
         <a class="dropdown-item text-center" href="#" onclick="viewChatParticipants(` + chatId + `)">View participants</a>
         <a class="dropdown-item  text-center" href="#" data-toggle="modal" data-target="#add-user-to-chat-modal">Add person</a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item text-center ` + active + `" href="#" onclick="changeChatName(` + chatId + `)">Change name</a>
-        <a class="dropdown-item text-danger text-center" href="#" onclick="removeUserFromChat(` + chatId + `)">Leave group</a>
+        <div class="dropdown-divider"></div> ` +
+            // `<a class="dropdown-item text-center ` + active + `" href="#" onclick="changeChatName(` + chatId + `)">Change name</a> ` +
+            `<a class="dropdown-item text-danger text-center" href="#" onclick="removeUserFromChat(` + chatId + `)">Leave group</a>
         <a class="dropdown-item text-danger text-center ` + active + `" href="#" onclick="deleteChat(` + chatId + `);">Delete chat</a>
         `;
 
@@ -394,10 +412,12 @@ function loadChat(chatId, name = "") {
                 friendsId = element.user.id;
             }
         });
-        dropdownHtml = `
-        <a class="dropdown-item text-center" href="#" onclick="viewProfile('` + friendsId + `')">View Profile</a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item text-danger text-center" href="#" onclick="removeFriend('` + friendsId + `')">Remove friend</a>
+        //todo
+        dropdownHtml = 
+        // `
+        // <a class="dropdown-item text-center" href="#" onclick="viewProfile('` + friendsId + `')">View Profile</a>
+        // <div class="dropdown-divider"></div> `+ 
+        `<a class="dropdown-item text-danger text-center" href="#" onclick="removeFriend('` + friendsId + `')">Remove friend</a>
         `;
     }
     dropdownSettings.html(dropdownHtml);
@@ -440,11 +460,12 @@ function loadChat(chatId, name = "") {
         return new Date(a.date) - new Date(b.date);
     });
     console.log(dict);
-    var htmlResult = `
-        <div class="row m-0 p-0">
-            <button class="mx-auto btn btn-small btn-outline-info mt-1">Load more</button>
-        </div>  
-    `;
+    var htmlResult = `` 
+    // + `
+    //     <div class="row m-0 p-0">
+    //         <button class="mx-auto btn btn-small btn-outline-info mt-1">Load more</button>
+    //     </div>  
+    // `;
 
     var seenBarElements = [];
     dict.forEach(element => {
@@ -469,7 +490,11 @@ function loadChat(chatId, name = "") {
                 console.log()
                 isMine = true;
             }
-            htmlResult += buildMessage(element.message.id, element.message.sender.userName, element.message.text, profilePicString, element.date, seenByString, isMine, element.message.isRemoved, isOwner)
+            var file = null;
+            if (element.message.hasOwnProperty('file')) {
+                file = element.message.file;
+            }
+            htmlResult += buildMessage(element.message.id, element.message.sender.userName, element.message.text, profilePicString, element.date, seenByString, isMine, element.message.isRemoved, isOwner, file)
         } else {
             seenBarElements.push(element);
         }

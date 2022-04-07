@@ -31,5 +31,12 @@ namespace ChatApi.Services
             name = Regex.Replace(name, "<.*?>", String.Empty);
             return name;
         }
+        public static string MakeValidFileName(string name)
+        {
+            string invalidChars = Regex.Escape(new string(System.IO.Path.GetInvalidFileNameChars()));
+            string invalidRegStr = string.Format(@"([{0}]*\.+$)|([{0}]+)", invalidChars);
+
+            return Regex.Replace(name, invalidRegStr, "_");
+        }
     }
 }

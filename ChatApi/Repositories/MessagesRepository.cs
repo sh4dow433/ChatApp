@@ -17,6 +17,7 @@ namespace ChatApi.Repositories
                 .Include(m => m.Chat)
                     .ThenInclude(c => c.UsersChats)
                         .ThenInclude(uc => uc.User)
+                .Include(m => m.File)
                 .Include(m => m.Sender)
                 .FirstOrDefault(m => m.Id == (int)id);
         }

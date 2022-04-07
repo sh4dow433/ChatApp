@@ -155,12 +155,13 @@
         </div>
 
         <!-- msg bar -->
+        <!-- todo -->
         <div class="message-bar bg-light mb-1 px-4 d-flex">
             <div class="add-photo-btn">
                 <label for="photo" class=" btn bg-light"> <i class="material-icons">add_a_photo</i></label>
                 <input type="file" accept="image/*" name="photo" id="photo">
             </div>
-            <div class="add-photo-btn">
+            <div class="add-file-btn">
                 <label for="file" class=" btn bg-light"> <i class="material-icons">attachment</i></label>
                 <input type="file" name="photo" id="file">
             </div>
@@ -311,6 +312,43 @@
                 </button>
             </div>
             <div class="modal-body">
+                <!-- alerts -->
+                <div id="email-changed-successfuly" class="d-none mb-0  alert alert-success alert-dismissible fade show"
+                    role="alert">
+                    <strong>Email changed!</strong>
+                    <button type="button" class="close" onclick="$('#email-changed-successfuly').addClass('d-none')"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="email-changed-error" class="d-none mb-0  alert alert-danger alert-dismissible fade show"
+                    role="alert">
+                    <strong>Email couldn't be changed!</strong>
+                    <p id="email-changed-error-text"></p>
+                    <button type="button" class="close" onclick="$('#email-changed-error').addClass('d-none')"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div id="password-changed-successfuly" class="d-none mb-0  alert alert-success alert-dismissible fade show"
+                    role="alert">
+                    <strong>Password changed!</strong>
+                    <button type="button" class="close" onclick="$('#password-changed-successfuly').addClass('d-none')"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="password-changed-error" class="d-none mb-0  alert alert-danger alert-dismissible fade show"
+                    role="alert">
+                    <strong>Password couldn't be changed!</strong>
+                    <p id="password-changed-error-text"></p>
+                    <button type="button" class="close" onclick="$('#password-changed-error').addClass('d-none')"
+                        aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
                 <div>
                     <div class="form-group row mx-5">
                         <label for="settings-email" class="col-sm-2 col-form-label col-form-label-sm">Email</label>
@@ -327,16 +365,16 @@
 
                     <hr>
                     <div class="form-group row mx-5">
-                        <label for="settings-old-password"
-                            class="col-sm-2 col-form-label col-form-label-sm">Old Password</label>
+                        <label for="settings-old-password" class="col-sm-2 col-form-label col-form-label-sm">Old
+                            Password</label>
                         <div class="col-sm-10">
                             <input type="password" class="form-control form-control-sm" id="settings-old-password"
                                 placeholder="old password">
                         </div>
                     </div>
                     <div class="form-group row mx-5">
-                        <label for="settings-password"
-                            class="col-sm-2 col-form-label col-form-label-sm">New Password</label>
+                        <label for="settings-password" class="col-sm-2 col-form-label col-form-label-sm">New
+                            Password</label>
                         <div class="col-sm-10">
                             <input type="password" class="form-control form-control-sm" id="settings-password"
                                 placeholder="new password">
@@ -352,7 +390,7 @@
                     </div>
                     <div class="form-group row mx-5">
                         <div class="mr-auto col-sm-2">
-                            <button class="btn btn-warning">Change</button>
+                            <button class="btn btn-warning" onclick="changePassword()">Change</button>
                         </div>
                     </div>
                 </div>
@@ -366,4 +404,5 @@
 <script>
     startConnection();
     loadApp();
+    loadFileForm();
 </script>

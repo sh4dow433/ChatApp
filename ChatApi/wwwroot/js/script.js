@@ -9,7 +9,7 @@ async function loadPage() {
         $("main").load("pages/application.html");
         // 
         await new Promise(resolve => setTimeout(resolve, 100));
-        $("#my-account-name").text(getCookie("userName"));
+        // $("#my-account-name").text(getCookie("userName"));
     } else {
         $("nav").load("pages/not-logged-in-nav.html");
         $("main").load("pages/login.html");
@@ -27,10 +27,11 @@ function loadRegisterPage() {
     return false;
 }
 
-function loadSettingsPage() {
+// function loadSettingsPage() {
 
-}
+// }
 async function loadApp() {
+    $("#my-account-name").text(getCookie("userName")); //!
     await getChats();
     updateChatsUI();
     if (activeChatId == null || activeChatName == null) {
@@ -50,6 +51,14 @@ async function loadApp() {
             }
             $('.chat-name').html("No chats found");
             $('.message-list').html("<p class='text-center text-secondary'>Add a friend to start chatting</p>")
+            
+            // !
+            $('.add-photo-btn').attr('disabled', true);
+            $('.add-file-btn').attr('disabled', true);
+            $('#photo').attr('disabled', true);
+            $('#file').attr('disabled', true);
+            $('.send-message-btn').attr('disabled', true);
+            $('#chat-text').attr('disabled', true);
         }
     } else {
         loadChat(activeChatId, activeChatName);

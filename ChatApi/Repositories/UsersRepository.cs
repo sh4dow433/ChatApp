@@ -35,6 +35,10 @@ namespace ChatApi.Repositories
                             .ThenInclude(m => m.Chat)
                                 .ThenInclude(c => c.UsersChats)
                                     .ThenInclude(uc => uc.User)
+                .Include(u => u.UsersChats)
+                    .ThenInclude(uc => uc.Chat)
+                        .ThenInclude(c => c.Messages)
+                            .ThenInclude(m => m.File)
                 .FirstOrDefault(u => u.Id == (string)id);
         }
         public override IEnumerable<AppUser> Get(Expression<Func<AppUser, bool>> filter)

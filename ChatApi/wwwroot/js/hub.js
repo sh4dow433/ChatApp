@@ -16,7 +16,7 @@ async function startConnection() {
         setTimeout(start, 5000);
     }
 };
-//CLOSE EVENT
+//ON CLOSE EVENT
 hubConnection.onclose(function (event) {
     $('#connection-lost').removeClass('d-none');
 });

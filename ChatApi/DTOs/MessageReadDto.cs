@@ -10,7 +10,6 @@ namespace ChatApi.DTOs
         public string Text { get; set; }
         public DateTime Date { get; set; }
         public bool IsRemoved { get; set; }
-        public bool HasFileAttached { get; set; }
-        public FileReadDto File { get; set; }
+        public FileRecordReadDto File { get; set; }
     }
 }

@@ -105,18 +105,39 @@ function logout() {
 }
 
 function changeName() {
-// todo
+    // todo
 }
 
-function changePassword() {
+async function changePassword() {
+    var oldPassword = $('#settings-old-password').val();
+    var password = $('#settings-password').val();
+    var passwordConfirmation = $('#settings-confirm-password').val();
+    var headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getCookie("accessToken")
+    }
+    var data = {
+        oldPassword: oldPassword,
+        password: password,
+        passwordConfirmation: passwordConfirmation
+    }
 
+    var resp = await fetchData("api/account/newPassword", "POST", headers, data);
+    console.log(resp);
+    if (resp.status == 200) {
+        $('#password-changed-successfuly').removeClass('d-none');
+    } else {
+        $('#password-changed-error').removeClass('d-none');
+        $('#password-changed-error-text').html("Recheck the information");
+    }
 }
 
 async function changeEmail() {
     var newEmail = $('#settings-email').val();
     var re = /\S+@\S+\.\S+/;
-    if(re.test(newEmail) == false) {
-        /// display err
+    if (re.test(newEmail) == false) {
+        $('#email-changed-error').removeClass('d-none');
+        $('#email-changed-error-text').html("Invalid email address");
         console.log("CHANGE EMAIL: ERR1");
         return;
     }
@@ -132,9 +153,10 @@ async function changeEmail() {
     var resp = await fetchData("api/account/newEmail", "POST", headers, data);
     console.log(resp);
     if (resp.status == 200) {
-        // display msg
+        $('#email-changed-successfuly').removeClass('d-none');
     } else {
-        // display err
+        $('#email-changed-error').removeClass('d-none');
+        $('#email-changed-error-text').html(resp.data.detail);
     }
 }
 
@@ -158,7 +180,7 @@ async function addFriend(e) {
     console.log(response);
     if (response.status == 201) {
         $('#friend-added').removeClass('d-none');
-    } else if(response.status == 404) {
+    } else if (response.status == 404) {
         $('#friend-not-found').removeClass('d-none');
     } else {
         $('#friend-couldnt-be-added').removeClass('d-none');

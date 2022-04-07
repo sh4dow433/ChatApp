@@ -20,6 +20,8 @@ using ChatApi.Services;
 using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Net;
+using System.IO;
 
 namespace ChatApi
 {
@@ -48,6 +50,7 @@ namespace ChatApi
             services.AddScoped<IConnectionsManager, ConnectionsManager>();
             services.AddScoped<IChatsManager, ChatsManager>();
             services.AddScoped<IFriendsManager, FriendsManager>();
+            services.AddScoped<IFilesManager, FilesManager>();
 
             services.AddIdentity<AppUser, IdentityRole>(cfg =>
             {

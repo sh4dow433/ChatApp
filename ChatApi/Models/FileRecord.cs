@@ -12,7 +12,7 @@ namespace ChatApi.Models
         [Required]
         public bool IsPhoto { get; set; }
         [Required]
-        public string Path { get; set; }
+        public string FileLocation { get; set; }
         [Required]
         public DateTime Uploaded { get; set; }
     }

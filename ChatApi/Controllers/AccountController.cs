@@ -139,7 +139,7 @@ namespace ChatApi.Controllers
             var result = await _userManager.CreateAsync(user, registerDto.Password);
             if (result.Succeeded)
             {
-                ////////////adauga rol aici
+                //////////// add user role
                 var friend = new Friend()
                 {
                     User = user
@@ -175,7 +175,7 @@ namespace ChatApi.Controllers
             var result = await _userManager.UpdateAsync(user);
             if(result.Succeeded)
             {
-                return Ok();
+                return Ok(new {message = "Email was changed!"});
             }
             return Problem();
         }
@@ -194,10 +194,11 @@ namespace ChatApi.Controllers
             var result = await _userManager.ChangePasswordAsync(user, changePasswordDto.OldPassword, changePasswordDto.Password);
             if (result.Succeeded)
             {
-                return Ok();
+                return Ok(new {message = "Password was changed"});
             }
             return Problem();
         }
+
         [HttpPost]
         [Route("newUsername")]
         public async Task<IActionResult> ChangeName([FromBody] string newUsername)

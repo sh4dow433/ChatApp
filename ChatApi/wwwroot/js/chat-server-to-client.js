@@ -82,8 +82,18 @@ hubConnection.on("ChatDeleted", async function (chatId, refresh) {
                     loadChat(chat.id, friendName);
                     seenChat(chat.id);
                 }
+
+
                 $('.chat-name').html("No chats found");
                 $('.message-list').html("<p class='text-center text-secondary'>Add a friend to start chatting</p>")
+                
+                //todo
+                $('.add-photo-btn').attr('disabled', true);
+                $('.add-file-btn').attr('disabled', true);
+                $('#photo').attr('disabled', true);
+                $('#file').attr('disabled', true);
+                $('.send-message-btn').attr('disabled', true);
+                $('#chat-text').attr('disabled', true);
             }
         } else {
             loadChat(activeChatId, activeChatName);
